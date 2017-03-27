@@ -170,7 +170,7 @@ Esse método deve retornar todos as compras realizadas na API por um cliente esp
 
 #### Tecnologias
 Você tem liberdade de realizar os desafios com as tecnologias que achar melhor.
-Lembrando que você deverá informar quais foram usadas e como instalar, rodar e acessos, no arquivo (`details.txt`)[https://github.com/stone-pagamentos/desafio-backend/blob/master/details.txt] (se necessário) para análise do desafio.
+Lembrando que você deverá informar quais foram usadas e como instalar, rodar e acessos, no arquivo [`details.txt`](https://github.com/stone-pagamentos/desafio-backend/blob/master/details.txt) (se necessário) para análise do desafio.
 
 
 ---
