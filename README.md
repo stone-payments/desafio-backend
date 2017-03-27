@@ -7,9 +7,8 @@ Todos os itens serão colocados em um carrinho do lado do aplicativo e passados 
 
 O candidato deve dar **fork** neste repositório e após o termino do desenvolvimento, realizar um **pull request** para análise do time.
 
----
 
-#### POST `/starstore/product`
+### POST `/starstore/product`
 Esse método deve receber um produto novo e inseri-lo em um banco de dados para ser consumido pela própria API.
 ```json
 {
@@ -31,7 +30,7 @@ Esse método deve receber um produto novo e inseri-lo em um banco de dados para 
 | date        | String |
 
 
-#### GET `/starstore/products`
+### GET `/starstore/products`
 Esse método da API deve retornar o seguinte JSON
 ```json
 [
@@ -75,7 +74,7 @@ Esse método da API deve retornar o seguinte JSON
 Após o usuário adicionar todos os itens desejados no carrinho, ele finalizará a compra.
 Para isso, você precisará fazer o método `buy` na sua API.
 
-#### POST `/starstore/buy`
+### POST `/starstore/buy`
 Esse método irá receber os dados da compra, junto com os dados do usuário.
 ```json
 {
@@ -94,6 +93,7 @@ Esse método irá receber os dados da compra, junto com os dados do usuário.
 ```
 
 + Transaction
+
 | Campo        | Tipo       |
 |--------------|------------|
 | client_id    | String     |
@@ -102,6 +102,7 @@ Esse método irá receber os dados da compra, junto com os dados do usuário.
 | credit_card  | CreditCard |
 
 + CreditCard
+
 | Campo            | Tipo   |
 |------------------|--------|
 | card_number      | String |
@@ -111,7 +112,7 @@ Esse método irá receber os dados da compra, junto com os dados do usuário.
 | exp_date         | String |
 
 
-#### GET `/starstore/history`
+### GET `/starstore/history`
 Esse método deve retornar todos as compras realizadas na API
 ```json
 [
@@ -146,7 +147,7 @@ Esse método deve retornar todos as compras realizadas na API
 | date             | String |
 | purchase_id      | String |
 
-#### GET `/starstore/history/{clientId}`
+### GET `/starstore/history/{clientId}`
 Esse método deve retornar todos as compras realizadas na API por um cliente específico
 ```json
 [
