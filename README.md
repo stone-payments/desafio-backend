@@ -168,6 +168,10 @@ Esse método deve retornar todos as compras realizadas na API por um cliente esp
 ]
 ```
 
+#### Tecnologias
+Você tem liberdade de realizar os desafios com as tecnologias que achar melhor.
+Lembrando que você deverá informar quais foram usadas e como instalar, rodar e acessos, no arquivo `details.txt` (se necessário) para análise do desafio.
+
 
 ---
 #### LICENSE
