@@ -12,13 +12,13 @@ O candidato deve dar **fork** neste repositório e após o termino do desenvolvi
 Esse método deve receber um produto novo e inseri-lo em um banco de dados para ser consumido pela própria API.
 ```json
 {
-    "title": "Blusa do Imperio",
-    "price": 7990,
-    "zipcode": "78993-000",
-    "seller": "Jo\u00e3o da Silva",
-    "thumbnailHd": "https://cdn.awsli.com.br/600x450/21/21351/produto/3853007/f66e8c63ab.jpg",
-    "date": "26/11/2015"
-  }
+   "title":"Blusa do Imperio",
+   "price":7990,
+   "zipcode":"78993-000",
+   "seller":"Jo\u00e3o da Silva",
+   "thumbnailHd":"https://cdn.awsli.com.br/600x450/21/21351/produto/3853007/f66e8c63ab.jpg",
+   "date":"26/11/2015"
+}
 ```
 | Campo       | Tipo   |
 |-------------|--------|
