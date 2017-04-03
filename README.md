@@ -7,6 +7,13 @@ Todos os itens serão colocados em um carrinho do lado do aplicativo e passados 
 
 O candidato deve dar **fork** neste repositório e após o termino do desenvolvimento, realizar um **pull request** para análise do time.
 
+O candidato tem a liberdade de realizar o desafio com a tecnologia que achar melhor.
+Deverá informar quais tecnologias foram usadas, como instalar, rodar e efetuar os acessos no arquivo [`details.txt`](https://github.com/stone-pagamentos/desafio-backend/blob/master/details.txt) (se necessário) para análise do desafio.
+
+### Extra
+- Utilizar Cache
+- Autenticação nas requisições
+- Utilizar Docker
 
 ### POST `/starstore/product`
 Esse método deve receber um produto novo e inseri-lo em um banco de dados para ser consumido pela própria API.
@@ -15,7 +22,7 @@ Esse método deve receber um produto novo e inseri-lo em um banco de dados para 
    "title":"Blusa do Imperio",
    "price":7990,
    "zipcode":"78993-000",
-   "seller":"Jo\u00e3o da Silva",
+   "seller":"João da Silva",
    "thumbnailHd":"https://cdn.awsli.com.br/600x450/21/21351/produto/3853007/f66e8c63ab.jpg",
    "date":"26/11/2015"
 }
@@ -38,7 +45,7 @@ Esse método da API deve retornar o seguinte JSON
     "title": "Blusa do Imperio",
     "price": 7990,
     "zipcode": "78993-000",
-    "seller": "Jo\u00e3o da Silva",
+    "seller": "João da Silva",
     "thumbnailHd": "https://cdn.awsli.com.br/600x450/21/21351/produto/3853007/f66e8c63ab.jpg",
     "date": "26/11/2015"
   },
@@ -168,9 +175,7 @@ Esse método deve retornar todos as compras realizadas na API por um cliente esp
 ]
 ```
 
-#### Tecnologias
-Você tem liberdade de realizar os desafios com as tecnologias que achar melhor.
-Lembrando que você deverá informar quais foram usadas e como instalar, rodar e acessos, no arquivo [`details.txt`](https://github.com/stone-pagamentos/desafio-backend/blob/master/details.txt) (se necessário) para análise do desafio.
+
 
 
 ---
