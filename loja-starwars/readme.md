@@ -1,5 +1,5 @@
 ##Tecnologias
-Java 8, Spring, Hibernate, Jackson, Maven, Apache Tomcat v8.5.
+Java 8, Spring, Hibernate, Jackson, Maven.
 
 
 ##br.com.stone.loja.confJPAConfiguration JPA Setup
@@ -9,5 +9,6 @@ Configuração do database adicionar login e senha
 
 Mysql database starstore.
 
-##Context root
-starstore
+
+##API REST URL
+https://starstore.herokuapp.com
