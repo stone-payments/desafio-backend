@@ -10,10 +10,14 @@ buildscript {
 		classpath('se.transmode.gradle:gradle-docker:1.2')
 	}
 }
+/* 
 
+Para fazer o "refresh gradle project" e necessario comentar a linha abaixo.
+group = 'starstore'
+para fazer o gerar a "imagem no docker e necessário descomentar a linha acima.
+Provavel bug no meu ambiente de desenvolvimento (MAC OS)
 
-
-
+*/
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
