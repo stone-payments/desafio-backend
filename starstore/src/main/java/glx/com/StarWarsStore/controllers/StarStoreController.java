@@ -69,7 +69,7 @@ public class StarStoreController {
 			Transaction transaction = starStoreService.addTransaction(input);
 			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 					.buildAndExpand(transaction.getId()).toUri();
-			log.info("Successful transaction..");
+			log.info("Successful transaction [TRANSACTIO ID: " + transaction.getId());
 			return ResponseEntity.created(location).build();
 		} else {
 			throw new ValiationCustonException(errorMessage, "transaction");
@@ -104,7 +104,7 @@ public class StarStoreController {
 
 		List<HistoryDTO> historyList = historyService.readHistory();
 
-		log.info("Searching for shitory by id.");
+		log.info("Searching for shitory.");
 		if (historyList.size() == 0) {
 			throw new SearchNotFoundException("transaction");
 		}

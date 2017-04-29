@@ -37,8 +37,23 @@ public class HistoryService {
 		return historys;
 	}
 
-	private List<HistoryDTO> prepareListDTO(HistoryDTO dto) {
+
+
+	@Cacheable("historyCliente")
+	public List<HistoryDTO> readHistoryClient(String clientId) {
 		historys = new ArrayList<>();
+		try {
+			transactionRepository.findByClientId(clientId).forEach(t -> prepareListDTO(prepareDTO(t)));
+		} catch (Exception e) {
+		
+			log.error("Failed to read the Historys: " + e);
+		}
+		
+		return historys;
+
+	}
+
+	private List<HistoryDTO> prepareListDTO(HistoryDTO dto) {
 		try {
 			historys.add(dto);
 		} catch (Exception e) {
@@ -47,21 +62,7 @@ public class HistoryService {
 		
 		return historys;
 	}
-
-	@Cacheable("historyCliente")
-	public List<HistoryDTO> readHistoryClient(String clientId) {
-		historys = new ArrayList<>();
-		try {
-			
-		} catch (Exception e) {
-			transactionRepository.findByClientId(clientId).forEach(t -> prepareListDTO(prepareDTO(t)));
-			log.error("Failed to read the Historys: " + e);
-		}
-		
-		return historys;
-
-	}
-
+	
 	private HistoryDTO prepareDTO(Transaction transaction) {
 
 		HistoryDTO dto = new HistoryDTO();
