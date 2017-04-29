@@ -9,23 +9,25 @@ import glx.com.StarWarsStore.controllers.StarStoreController;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class SearchNotFoundException extends RuntimeException {
+	private static final String NO_RESULTS_FOR_THIS_ID = " No results - ";
+
 	private Logger log = LoggerFactory.getLogger(StarStoreController.class);
 
 	public String message;
 
 	public SearchNotFoundException(Long id, String pesquisa) {
-		this.message = " A PESQUISA DE " + pesquisa + " COM O ID :" + id + " NAO ENTREGOU RESULTADO";
+		this.message = NO_RESULTS_FOR_THIS_ID + pesquisa + "Id : " + id ;
 		log.error(this.message);
 
 	}
 
 	public SearchNotFoundException(String pesquisa) {
-		this.message = " A PESQUISA DE " + pesquisa + " NAO ENTREGOU RESULTADO";
+		this.message = "No results for " + pesquisa ;
 		log.error(this.message);
 	}
 
 	public SearchNotFoundException(String id, String pesquisa) {
-		this.message = " A PESQUISA DE " + pesquisa + " COM O ID :" + id + " NAO ENTREGOU RESULTADO";
+		this.message = NO_RESULTS_FOR_THIS_ID + pesquisa + "Id : " + id ;
 		log.error(this.message);
 	}
 

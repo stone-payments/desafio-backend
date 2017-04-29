@@ -15,7 +15,7 @@ import glx.com.StarWarsStore.controllers.StarStoreController;
 
 		public ValiationCustonException(String msg, String insert) {
 			this.message = msg;
-			log.error("OS SEGUINTES CAMPOS DO " +insert +" ESTAVAM VAZIOS "+this.message);
+			log.error("Null fields: " + insert +" "+this.message);
 		}
 		
 

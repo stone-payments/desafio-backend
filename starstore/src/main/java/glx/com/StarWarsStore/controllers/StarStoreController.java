@@ -42,7 +42,7 @@ public class StarStoreController {
 	public StarStoreController(StarStoreService starStoreService, HistoryService historyService) {
 		this.starStoreService = starStoreService;
 		this.historyService = historyService;
-		log.info("Criando os Serviços de apoio ao StarStoreController...");
+		log.info("Creating services instances...." + StarStoreController.class.getName());
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "/product")
@@ -53,10 +53,10 @@ public class StarStoreController {
 			Product product = starStoreService.addProduct(input);
 				URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 						.buildAndExpand(product.getId()).toUri();
-				log.info("PRODUTO cadastrado com sucesso. ID do produto: " + product.getId());
+				log.info("Registered successfully [PRODUCT ID: " + product.getId()+"]");
 				return ResponseEntity.created(location).build();
 		} else {
-			throw new ValiationCustonException(errorMessage, "PRODUTO");
+			throw new ValiationCustonException(errorMessage, "product");
 		}
 
 	}
@@ -66,12 +66,13 @@ public class StarStoreController {
 		String errorMessage = null;
 		errorMessage = validateTransaction(errors);
 		if (errorMessage.length() == 0) {
+			Transaction transaction = starStoreService.addTransaction(input);
 			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-					.buildAndExpand(starStoreService.addTransaction(input).getId()).toUri();
-			log.info("Transação realizada com sucesso.");
+					.buildAndExpand(transaction.getId()).toUri();
+			log.info("Successful transaction..");
 			return ResponseEntity.created(location).build();
 		} else {
-			throw new ValiationCustonException(errorMessage, "TRANSACAO");
+			throw new ValiationCustonException(errorMessage, "transaction");
 		}
 
 	}
@@ -79,9 +80,9 @@ public class StarStoreController {
 	@RequestMapping(method = RequestMethod.GET, value = "/product/{productId}")
 	public Product readProduct(@PathVariable Long productId) {
 		Product product = starStoreService.readProduct(productId);
-		log.info("Iniciando a pesquisa por PRODUTOS DA LOJA...");
+		log.info("Searching for products.");
 		if (product == null) {
-			throw new SearchNotFoundException(productId, "PRODUTO");
+			throw new SearchNotFoundException(productId, "product");
 		}
 		return product;
 
@@ -90,9 +91,9 @@ public class StarStoreController {
 	@RequestMapping(method = RequestMethod.GET, value = "/products")
 	public List<Product> readProducts() {
 		List<Product> productList = starStoreService.readProdcuts();
-		log.info("Iniciando a pesquisa por PRODUTOS DA LOJA...");
+		log.info("Searching fo products.");
 		if (productList.size() == 0) {
-			throw new SearchNotFoundException("PRODUTOS");
+			throw new SearchNotFoundException("products");
 		}
 		return productList;
 
@@ -103,9 +104,9 @@ public class StarStoreController {
 
 		List<HistoryDTO> historyList = historyService.readHistory();
 
-		log.info("Iniciando a pesquisa por HISTORICO DE COMPRAS DA LOJA...");
+		log.info("Searching for shitory by id.");
 		if (historyList.size() == 0) {
-			throw new SearchNotFoundException("TRANSACTION");
+			throw new SearchNotFoundException("transaction");
 		}
 		return historyList;
 	}
@@ -113,9 +114,9 @@ public class StarStoreController {
 	@RequestMapping(method = RequestMethod.GET, value = "/history/{clientId}")
 	public List<HistoryDTO> readHistoryClient(@PathVariable String clientId) {
 		List<HistoryDTO> historyClient = historyService.readHistoryClient(clientId);
-		log.info("Iniciando a pesquisa por HISTORICO DE COMPRA DO CLIENTE...");
+		log.info("Searching for history clients by id");
 		if (historyClient.size() == 0) {
-			throw new SearchNotFoundException(clientId, "TRANSACTION_CLIENT");
+			throw new SearchNotFoundException(clientId, "transactio_client");
 		}
 		return historyClient;
 	}
@@ -124,9 +125,9 @@ public class StarStoreController {
 	public HttpStatus refreshAllProductsCache() {
 		try {
 			starStoreService.refreshAllProductsCache();
-			log.info("Iniciando a llimpeza do cash do PRODUTO...");
+			log.info("Start clearing product cache.");
 		} catch (Exception e) {
-			log.error("Falha ao iniciar a limpeza do cache do PRODUTO : " + e);
+			log.error("Clearing cache failed: " + e);
 			return HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		return HttpStatus.ACCEPTED;
@@ -137,16 +138,15 @@ public class StarStoreController {
 	public HttpStatus refreshAllhistoryClienteCache() {
 		try {
 			historyService.refreshAllhistoryClienteCache();
-			log.info("Iniciando a llimpeza do CASH DO HISTORY CLIENTE...");
+			log.info("Start clearing history cache.");
 		} catch (Exception e) {
-			log.error("Falha ao iniciar a limpeza do CACHE HISTORY CLIENTE: " + e);
+			log.error("Clearing cache failed: " + e);
 			return HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		return HttpStatus.ACCEPTED;
 	}
 
 	private String validateTransaction(Errors errors) {
-		String errJason = null;
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "creditCard.cardNumber", NOT_NULL_MSG);
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "creditCard.value", NOT_NULL_MSG);
@@ -162,19 +162,19 @@ public class StarStoreController {
 	}
 
 	private String errorsToJSON(Errors errors) {
-		String errJason = "0";
+		String errJson = "0";
 
-		errJason = "{'";
+		errJson = "{'";
 		for (FieldError field : errors.getFieldErrors()) {
-			errJason += field.getField();
-			errJason += "':'";
-			errJason += field.getCode() + "','";
+			errJson += field.getField();
+			errJson += "':'";
+			errJson += field.getCode() + "','";
 		}
-		errJason = errJason.substring(0, errJason.length() - 2);
-		if (errJason.length() > 1) {
-			errJason += "}";
+		errJson = errJson.substring(0, errJson.length() - 2);
+		if (errJson.length() > 1) {
+			errJson += "}";
 		}
-		return errJason;
+		return errJson;
 	}
 
 }

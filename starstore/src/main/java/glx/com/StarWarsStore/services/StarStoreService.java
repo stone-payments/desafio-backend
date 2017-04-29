@@ -27,6 +27,7 @@ public class StarStoreService {
 	public StarStoreService(ProductRepository productRepository, TransactionRespository transactionRepository) {
 		this.productRepository = productRepository;
 		this.transactionRepository = transactionRepository;
+		log.info("Creating repositories...." + StarStoreService.class.getName());
 	}
 
 	public Product addProduct(Product input) {
@@ -35,7 +36,7 @@ public class StarStoreService {
 			product = productRepository.save(new Product(input.getTitle(), input.getPrice(), input.getZipcode(),
 					input.getSeller(), input.getZipcode(), input.getDate()));
 		} catch (Exception e) {
-			log.error("Falha ao cadastrar o Produto , no nivel do SERVICE: " + e);
+			log.error("Failed to register the Product: " + e);
 		}
 		return product;
 	}
@@ -46,7 +47,7 @@ public class StarStoreService {
 		try {
 			product = this.productRepository.findOne(productId);
 		} catch (Exception e) {
-			log.error("Falha ao ler o Produto, no nivel do SERVICE : " + e);
+			log.error("Failed to read the Product: " + e);
 		}
 		return product;
 	}
@@ -56,7 +57,7 @@ public class StarStoreService {
 		try {
 			products = this.productRepository.findAll();
 		} catch (Exception e) {
-			log.error("Falha ao cadastrar a transacao, no nivel do SERVICE : " + e);
+			log.error("Failed to register the Transaction: " + e);
 		}
 		return products;
 
@@ -72,14 +73,14 @@ public class StarStoreService {
 									input.getCreditCard().getExpDate()))));
 
 		} catch (Exception e) {
-			log.error("Falha ao ler os Produtos, no nivel do SERVICE : " + e);
+			log.error("Failed to read the Products: " + e);
 		}
 		return transaction;
 	}
 
 	@CacheEvict(value = "products", allEntries = true)
 	public void refreshAllProductsCache() {
-		log.info("Limpando todo o cache de produtos..");
+		log.info("Cleaning cache... "  + StarStoreService.class.getName());
 	}
 
 }
