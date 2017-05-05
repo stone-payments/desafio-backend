@@ -1,9 +1,3 @@
-********************************
-******   STONE  PAYMENTS  ******
-********************************
-**** YOUR CHALLENGE DETAILS ****
-********************************
-
 Tecnologias adotadas:
 C# - linguagem de programação
 Web Api 2 - framework adotado para criação da api rest

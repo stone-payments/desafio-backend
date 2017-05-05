@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{44F4DACD-A832-4981-AE94-B8805E1A80C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APICORE", "APICORE\APICORE.csproj", "{69C5D1F7-F431-4C3B-8C0F-8E36E6944FF8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E2AAD39E-13E1-44E6-843E-D7276B136ED0}"
+	ProjectSection(SolutionItems) = preProject
+		Solution Items\Deploy.txt = Solution Items\Deploy.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{AC5F3253-CA70-42B8-A8D6-1D6995D0A860}"
+	ProjectSection(SolutionItems) = preProject
+		Client.sql = Client.sql
+		Scripts\IdentityRole.sql = Scripts\IdentityRole.sql
+		Scripts\IdentityUser.sql = Scripts\IdentityUser.sql
+		Scripts\IdentityUserClaim.sql = Scripts\IdentityUserClaim.sql
+		Scripts\IdentityUserLogin.sql = Scripts\IdentityUserLogin.sql
+		Scripts\IdentityUserRole.sql = Scripts\IdentityUserRole.sql
+		Scripts\Product.sql = Scripts\Product.sql
+		Scripts\StarStore.postman_collection.json = Scripts\StarStore.postman_collection.json
+		Scripts\StarStore.sql = Scripts\StarStore.sql
+		Scripts\Transaction.sql = Scripts\Transaction.sql
+		Scripts\User.sql = Scripts\User.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{44F4DACD-A832-4981-AE94-B8805E1A80C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44F4DACD-A832-4981-AE94-B8805E1A80C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44F4DACD-A832-4981-AE94-B8805E1A80C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44F4DACD-A832-4981-AE94-B8805E1A80C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69C5D1F7-F431-4C3B-8C0F-8E36E6944FF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69C5D1F7-F431-4C3B-8C0F-8E36E6944FF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69C5D1F7-F431-4C3B-8C0F-8E36E6944FF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69C5D1F7-F431-4C3B-8C0F-8E36E6944FF8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AC5F3253-CA70-42B8-A8D6-1D6995D0A860} = {E2AAD39E-13E1-44E6-843E-D7276B136ED0}
+	EndGlobalSection
+EndGlobal
