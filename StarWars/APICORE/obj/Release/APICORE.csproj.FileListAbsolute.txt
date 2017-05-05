@@ -1,0 +1,10 @@
+C:\VSTS\GOMES\StarWars\StarWars\APICORE\bin\Release\APICORE.dll.config
+C:\VSTS\GOMES\StarWars\StarWars\APICORE\bin\Release\APICORE.dll
+C:\VSTS\GOMES\StarWars\StarWars\APICORE\bin\Release\APICORE.pdb
+C:\VSTS\GOMES\StarWars\StarWars\APICORE\bin\Release\EntityFramework.dll
+C:\VSTS\GOMES\StarWars\StarWars\APICORE\bin\Release\EntityFramework.SqlServer.dll
+C:\VSTS\GOMES\StarWars\StarWars\APICORE\bin\Release\EntityFramework.xml
+C:\VSTS\GOMES\StarWars\StarWars\APICORE\bin\Release\EntityFramework.SqlServer.xml
+C:\VSTS\GOMES\StarWars\StarWars\APICORE\obj\Release\APICORE.csprojResolveAssemblyReference.cache
+C:\VSTS\GOMES\StarWars\StarWars\APICORE\obj\Release\APICORE.dll
+C:\VSTS\GOMES\StarWars\StarWars\APICORE\obj\Release\APICORE.pdb

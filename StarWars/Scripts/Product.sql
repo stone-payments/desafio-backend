@@ -1,0 +1,13 @@
+USE [StarStore]
+GO
+
+CREATE TABLE Product
+(
+Id INT IDENTITY PRIMARY KEY NOT NULL,
+Title VARCHAR(50) NOT NULL,
+Price INT NOT NULL,
+Zipcode VARCHAR(50),
+Seller VARCHAR(50),
+ProductDate VARCHAR(25),
+ThumbnailHd VARCHAR(250)
+);
