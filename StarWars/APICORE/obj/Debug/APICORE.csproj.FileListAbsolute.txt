@@ -8,13 +8,3 @@ C:\VSTS\GOMES\StarWars\StarWars\APICORE\bin\Debug\EntityFramework.SqlServer.xml
 C:\VSTS\GOMES\StarWars\StarWars\APICORE\obj\Debug\APICORE.csprojResolveAssemblyReference.cache
 C:\VSTS\GOMES\StarWars\StarWars\APICORE\obj\Debug\APICORE.dll
 C:\VSTS\GOMES\StarWars\StarWars\APICORE\obj\Debug\APICORE.pdb
-C:\Users\gomes\Desktop\github\desafio-backend\StarWars\APICORE\bin\Debug\APICORE.dll.config
-C:\Users\gomes\Desktop\github\desafio-backend\StarWars\APICORE\bin\Debug\APICORE.dll
-C:\Users\gomes\Desktop\github\desafio-backend\StarWars\APICORE\bin\Debug\APICORE.pdb
-C:\Users\gomes\Desktop\github\desafio-backend\StarWars\APICORE\bin\Debug\EntityFramework.dll
-C:\Users\gomes\Desktop\github\desafio-backend\StarWars\APICORE\bin\Debug\EntityFramework.SqlServer.dll
-C:\Users\gomes\Desktop\github\desafio-backend\StarWars\APICORE\bin\Debug\EntityFramework.xml
-C:\Users\gomes\Desktop\github\desafio-backend\StarWars\APICORE\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\gomes\Desktop\github\desafio-backend\StarWars\APICORE\obj\Debug\APICORE.csprojResolveAssemblyReference.cache
-C:\Users\gomes\Desktop\github\desafio-backend\StarWars\APICORE\obj\Debug\APICORE.dll
-C:\Users\gomes\Desktop\github\desafio-backend\StarWars\APICORE\obj\Debug\APICORE.pdb
