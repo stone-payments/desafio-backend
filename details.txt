@@ -3,3 +3,44 @@
 ********************************
 **** YOUR CHALLENGE DETAILS ****
 ********************************
+
+
+FRAMWORKS:
+Spring Boot
+Spring Security
+Spring Web
+Spring cache
+Spring Jpa
+
+CONTAINER:
+Docker
+
+IDE:
+Spring Tools Suite
+
+
+GRADLE - para o gerenciamento de dependencias e build do projeto
+
+
+Para acessar a url de login e senha:
+localhost:8080/starstore/login
+
+
+Json para autenticação:
+{"username":"admin","password":"password"}
+
+
+Para se manter autenticado:
+No header da ferramenta de teste (para desenvolvimento foi utilizado o postman) ,
+após fazer o login, copiar do header de resposta, o token e utlizar nas requsicões seguintes.
+EX:(e necessário que se copie o token com o prefixo Jedi)
+
+NOME DA VARIAVEL DE HEADER : Authorization
+VALOR DA VARIÁVEL AUTHORIZATION: Jedi eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTQ5NDE3NzQyM30.s60XyNwXF3Cgnob4h3fD9IijdkF0fvAubSDb4eEIHkGfdj3bK_6tZylHOtGIKZUasWJfUlVbobo0MiZokKBeDA
+
+
+
+
+
+
+
