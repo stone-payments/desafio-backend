@@ -1,0 +1,65 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.2.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath('se.transmode.gradle:gradle-docker:1.2')
+	}
+}
+/* 
+
+Para fazer o "refresh gradle project" e necessario comentar a linha abaixo.
+group = 'starstore'
+para fazer o gerar a "imagem no docker e necessário descomentar a linha acima.
+Provavel bug no meu ambiente de desenvolvimento (MAC OS)
+
+*/
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'docker'
+
+
+jar {
+    baseName = 'star-wars-store'
+}
+
+
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile("org.springframework.boot:spring-boot-starter-cache")
+	compile("org.springframework.boot:spring-boot-starter-hateoas")
+	compile("org.springframework.boot:spring-boot-starter-security")
+	runtime('com.h2database:h2')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile "io.jsonwebtoken:jjwt:0.7.0"
+	
+}
+
+
+
+task buildDocker(type: Docker, dependsOn: build) {
+  push = true
+  applicationName = jar.baseName
+  dockerfile = file('src/main/docker/Dockerfile')
+  doFirst {
+    copy {
+      from jar
+      into stageDir
+    }
+  }
+}
+
+
