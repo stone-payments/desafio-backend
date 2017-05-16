@@ -1,0 +1,1 @@
+{ "client_id":"7e655c6e-e8e5-4349-8348-e51e0ff3072e", "client_name":"Luke Skywalker", "total_to_pay":1236, "credit_card":{ "card_number":"1234123412341234", "value":7990, "cvv":789, "card_holder_name":"Luke Skywalker", "exp_date":"12/24" } }
