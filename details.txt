@@ -3,3 +3,12 @@
 ********************************
 **** YOUR CHALLENGE DETAILS ****
 ********************************
+
+Configuração:
+  Ajuste as configurações de conexão com o banco como desejar. Path: loja/src/main/java/br/com/starstore/dao/ConnectionDao.java
+  Caso queira, disponibilizei os scripts das tabelas.
+
+Instalação :
+  Compactar a pasta WEB-INF e index.html em um arquivo chamado "starstore.war". Path: loja/src/main/webapp/
+  Adicionar o arquivo "starstore.war" ao tomcat. Path: apache-tomcat-8.5.11/webapps
+  Abra o terminal/cmd, vá até a pasta bin do seu tomcat e execute o startup.
