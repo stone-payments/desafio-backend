@@ -8,6 +8,7 @@ Tecnologias:
   Java8
   Jax-rs
   Jersey
+  Gson
   JDBC
   Tomcat8
   PostgreSQL
