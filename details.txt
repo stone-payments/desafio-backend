@@ -4,6 +4,13 @@
 **** YOUR CHALLENGE DETAILS ****
 ********************************
 
+Tecnologias:
+  Java8
+  Jax-rs
+  JDBC
+  Tomcat8
+  PostgreSQL
+
 Configuração:
   Ajuste as configurações de conexão com o banco como desejar. Path: loja/src/main/java/br/com/starstore/dao/ConnectionDao.java
   Caso queira, disponibilizei os scripts das tabelas.
