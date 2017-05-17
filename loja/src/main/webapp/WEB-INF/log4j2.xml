@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="debug">
+    <Properties>
+        <Property name="pattern">%d{dd/MM/yyyy HH:mm:ss,SSS EEEE} %p [%-20c{1}] %m%n</Property>
+        <Property name="filePath">${sys:user.home}</Property>
+    </Properties>
+    <Appenders>
+        <RollingFile name="RollingFile"
+                     fileName="${filePath}/logs/meuLog.log"
+                     filePattern="${filePath}/logs/meuLog-%d{dd-MM-yyyy-HH:mm:ss}-%i.log">
+            <PatternLayout pattern="${pattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+        
+        <Console name="Console">
+            <PatternLayout pattern="${pattern}"/>
+        </Console>
+    </Appenders>
+    
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
+        </Root>
+        
+          <Logger name="org.hibernate" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+    </Loggers>
+    
+</Configuration>

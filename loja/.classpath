@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="src/test/java"/>
+	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/asm-all-repackaged-2.2.0-b21.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/cglib-2.2.0-b21.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/grizzly-framework-2.3.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/grizzly-http-2.3.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/grizzly-http-server-2.3.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/grizzly-rcm-2.3.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/gson-2.2.4.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/guava-14.0.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/hamcrest-core-1.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/hk2-api-2.2.0-b21.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/hk2-locator-2.2.0-b21.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/hk2-utils-2.2.0-b21.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/javax.annotation-api-1.2.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/javax.inject-2.2.0-b21.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/javax.ws.rs-api-2.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jersey-container-grizzly2-http-2.4.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/junit-4.9.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/osgi-resource-locator-1.0.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/validation-api-1.1.0.Final.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/xmlpull-1.1.3.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/xpp3_min-1.1.4c.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/xstream-1.4.6.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jersey-client-2.5.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jersey-common-2.5.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jersey-container-servlet-core-2.5.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jersey-server-2.5.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/postgresql-42.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/log4j-1.2-api-2.8.2.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/log4j-api-2.8.2.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/log4j-core-2.8.2.jar"/>
+	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
+</classpath>
