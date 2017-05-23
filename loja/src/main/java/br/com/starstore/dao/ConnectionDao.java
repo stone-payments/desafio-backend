@@ -2,26 +2,28 @@ package br.com.starstore.dao;
 
 import java.sql.Connection;
 
-import org.apache.log4j.Logger;
 import org.postgresql.ds.PGConnectionPoolDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ConnectionDao {
 
-	private static Logger LOGGER = Logger.getLogger(ConnectionDao.class);
-
-	// private static final String DRIVER = "org.postgresql.Driver";
-	private static final String USER = "postgres";
-	private static final String PASSWORD = "treinamento";
-	private static final String URL = "jdbc:postgresql://localhost:5432/desafioStone";
+	private static Logger LOGGER = LoggerFactory.getLogger(ConnectionDao.class);
 
 	private PGConnectionPoolDataSource pool;
 	private static ConnectionDao connectionDao;
 
 	public ConnectionDao() {
+		final String DBURL = System.getenv("DATABASE_URL");
+		final String USER = (DBURL.split("//")[1]).split(":")[0];
+		final String PASSWORD = ((DBURL.split("//")[1]).split(":")[1]).split("@")[0];
+		
 		PGConnectionPoolDataSource pool = new PGConnectionPoolDataSource();
-		pool.setUrl(URL);
-		pool.setUser(USER);
-		pool.setPassword(PASSWORD);
+
+		pool.setUrl("jdbc:postgresql://ec2-54-197-232-155.compute-1.amazonaws.com:5432/df12445hrn1eji?sslmode=require&"
+					.concat("user=").concat(USER)
+					.concat("&password=").concat(PASSWORD));
+		
 		this.pool = pool;
 	}
 
@@ -37,4 +39,10 @@ public class ConnectionDao {
 			throw new Exception("Erro ao tentar conectar com o banco de dados.");
 		}
 	}
+
+	public static void main(String[] args) throws Exception {
+		ConnectionDao.getInstance().getConnection();
+		System.out.println("OK");
+	}
+
 }
