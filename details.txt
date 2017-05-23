@@ -3,3 +3,14 @@
 ********************************
 **** YOUR CHALLENGE DETAILS ****
 ********************************
+
+
+Tecnologias:
+Java8
+Jetty
+SpringBoot
+Jackson
+JDBC
+
+Heroku:
+http://desafio-stone.herokuapp.com/
