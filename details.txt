@@ -4,6 +4,7 @@
 **** YOUR CHALLENGE DETAILS ****
 ********************************
 
+API REST COM CACHE
 
 Tecnologias:
 Java8
@@ -11,6 +12,7 @@ Jetty
 SpringBoot
 Jackson
 JDBC
+PostgreSQL
 
 Heroku:
 http://desafio-stone.herokuapp.com/
