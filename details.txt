@@ -11,6 +11,8 @@ Eu segui as instruções para baixar ele para Mac (sem Homebrew), mas na pasta c
 E no passo 3 de como rodar, ao invés de usar a ultima linha dita "mongod --dbpath <path to data directory>", eu usei "mongod --dbpath <path to data directory> --fork --logpath <path to log directory>/mongod.log".
 Depois disso para criar a base deve-se executar, em linha de comando, de dentro da pasta principal do mongoDB os comandos:
 
+(como administrador)
+
 - export PATH=<path to bin directory>:$PATH
 - mongo
 - use starstore
