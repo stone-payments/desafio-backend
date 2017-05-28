@@ -19,6 +19,8 @@ Depois disso para criar a base deve-se executar, em linha de comando, de dentro 
 
 Depois que o Node estiver baixado esses comandos devem ser executados em linhas de comando de dentro da pasta "lojaStarWars":
 
+(como administrador)
+
 - npm install
 - node app
 
