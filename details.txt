@@ -3,3 +3,50 @@
 ********************************
 **** YOUR CHALLENGE DETAILS ****
 ********************************
+
+Para realizar o desafio utilizei Node.js + Express e MongoDB para a base de dados.
+
+Para baixar MongoDB existe uma explicação nesse link: "https://docs.mongodb.com/master/tutorial/install-mongodb-on-os-x/?_ga=2.229617116.1928049072.1495819036-2049049586.1495774605"
+Eu segui as instruções para baixar ele para Mac (sem Homebrew), mas na pasta criada alem de adicionar o diretório data/db também criei a pasta "log" dentro da pasta principal. 
+E no passo 3 de como rodar, ao invés de usar a ultima linha dita "mongod --dbpath <path to data directory>", eu usei "mongod --dbpath <path to data directory> --fork --logpath <path to log directory>/mongod.log".
+Depois disso para criar a base deve-se executar, em linha de comando, de dentro da pasta principal do mongoDB os comandos:
+
+- export PATH=<path to bin directory>:$PATH
+- mongo
+- use starstore
+- db.createCollection('Products')
+- db.createCollection('Transactions')
+
+Depois que o Node estiver baixado esses comandos devem ser executados em linhas de comando de dentro da pasta "lojaStarWars":
+
+- npm install
+- node app
+
+Para realizar post usei RestEasy(extensão para o Chrome), não esquecer de adicionar no headers (name : Content_Type , Value: application/json)
+Depois pode se adicionar elementos na base como nos exemplos dados:
+
+{
+   "title":"Blusa do Imperio",
+   "price":7990,
+   "zipcode":"78993-000",
+   "seller":"João da Silva",
+   "thumbnailHd":"https://cdn.awsli.com.br/600x450/21/21351/produto/3853007/f66e8c63ab.jpg",
+   "date":"26/11/2015"
+}
+
+ou
+
+{
+   "client_id":"7e655c6e-e8e5-4349-8348-e51e0ff3072e",
+   "client_name":"Luke Skywalker",
+   "total_to_pay":1236,
+   "credit_card":{
+      "card_number":"1234123412341234",
+      "value":7990,
+      "cvv":789,
+      "card_holder_name":"Luke Skywalker",
+      "exp_date":"12/24"
+   }
+}
+
+Para acessar a base ir para http://localhost:3000/starstore/**** no Browser.
