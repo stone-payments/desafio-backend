@@ -23,6 +23,7 @@ Depois que o Node estiver baixado esses comandos devem ser executados em linhas 
 
 (como administrador)
 
+- npm install -g express
 - npm install
 - node app
 
