@@ -1,0 +1,3 @@
+{
+	"mongoURL" : "mongodb://mongo:27017/desafioBackend"
+}
