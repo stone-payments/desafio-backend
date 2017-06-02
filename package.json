@@ -1,0 +1,20 @@
+{
+  "name": "desafio-backend",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "config": "^1.26.1",
+    "cookie-parser": "^1.4.3",
+    "debug": "^2.6.8",
+    "express": "^4.15.3",
+    "express-jwt-token": "^0.1.5",
+    "jade": "^1.11.0",
+    "mongodb": "^2.2.28",
+    "morgan": "^1.8.2",
+    "serve-favicon": "^2.4.3"
+  }
+}
