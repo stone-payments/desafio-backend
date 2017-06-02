@@ -3,3 +3,8 @@
 ********************************
 **** YOUR CHALLENGE DETAILS ****
 ********************************
+- As requisicoes precisam de um token de autorizacao, basta colocar no header da requisicao:
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.t-IDcSemACt8x4iTMCda8Yhe3iZaWbvV5XKSTbuAn0M
+
+- Tambem foi utilizado o docker, so buildar o compose 
+- Porta padrao 3000
