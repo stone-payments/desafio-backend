@@ -13,7 +13,9 @@ Banco de dados local - necessita que o MongoDB esteja instalado em seu computado
 
 Instalar MongoDB: https://docs.mongodb.com/v3.0/installation/
 
-escrever npm install no prompt (eu já deixei a pasta node_modules lá mesmo assim, então talvez não precise desse passo)
+escrever npm install no prompt dentro da pasta do desafio (eu já deixei a pasta node_modules lá mesmo assim, então talvez não precise desse passo)
+
+Para rodar, escrever: npm start
 
 Para fazer os requests utilizei o Postman (extensão do Google Chrome).
 
