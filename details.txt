@@ -1,5 +1,90 @@
 ********************************
-******   STONE  PAYMENTS  ******
+******   STONE  PAYMENTS  ****** 
 ********************************
 **** YOUR CHALLENGE DETAILS ****
 ********************************
+
+A API foi feita com NodeJS e o banco de dados MongoDB (NoSQL). 
+Download NodeJS: https://nodejs.org/en/download/
+
+Para instalar, você deve baixar os arquivos da pasta StarStoreDani.zip para o seu computador e instalar o NodeJS. A aplicação rodará na porta 3015 (pode ser modificada na linha 3 do arquivo server.js).
+
+Banco de dados local - necessita que o MongoDB esteja instalado em seu computador. Está configurado para rodar na porta 27017. 
+
+Instalar MongoDB: https://docs.mongodb.com/v3.0/installation/
+
+escrever npm install no prompt dentro da pasta do desafio (eu já deixei a pasta node_modules lá mesmo assim, então talvez não precise desse passo)
+
+Para rodar, escrever: npm start
+
+Para fazer os requests utilizei o Postman (extensão do Google Chrome).
+
+Para a autenticação nas requisições, o Passport foi utilizado. Para isso, é necessário que se crie um login e uma senha através da requisição (pelo Postman): POST localhost:3015/signup com o as seguintes variáveis no body:
+Key: username Value: seuusuario
+Key: password Value: suasenha
+Observção: marcar x-www-form-urlendcoded 
+
+Após criar um login, você pode fazer o login: POST localhost:3015/login com os parâmetros do body:
+Key:username  Value:seuusuario
+Key:password Value:suasenha
+Observção: marcar x-www-form-urlendcoded 
+
+Se você colocar usuários e senhas válidas, você deve receber uma resposta dessa:
+{
+  "status": 200,
+  "message": "Login successful!"
+}
+
+Caso esteja errado, essa resposta aparecerá:
+{
+  "status": 403,
+  "message": "Invalid user or password"
+}
+
+Após se logar, você poderá fazer os outros requests.
+O único request que não precisa de login é o seguinte: localhost:3015/starstore/products pois qualquer deve conseguir ver os produtos de uma loja, mesmo sem estar logado :)
+
+Para fazer a requisição POST localhost:3015/starstore/product você deve colcar os seguintes parâmetros no body (exemplo):
+
+Key: title Value: Blusa do Império
+Key: price Value: 7990
+Key: zipcode Value: 78993-000
+Key: thunbailHd Value: https://cdn.awsli.com.br/600x450/21/21351/produto/3853007/f66e8c63ab.jpg
+Key: date Value: 26/11/2015
+Key: seller Value: João da Silva
+
+Observção: marcar x-www-form-urlendcoded 
+
+Para fazer a requisição POST localhost:3015/starstore/buy você deve colocar os seguintes parâmetros no body (exemplo):
+
+Key: client_id Value: 7e655c6e-e8e5-4349-8348-e51e0ff3072e
+Key: client_name Value: Luke Skywalke
+Key: credit_card.card_number Value: 1234123412341234
+Key: total_to_pay Value: 1236
+Key: credit_card.value Value: 7990
+Key: credit_card.cvv Value: 789
+Key: credit_card.card_holder_name Value: Luke Skywalker
+Key: credit_card.exp_date Value: 12/24
+
+Observção: marcar x-www-form-urlendcoded 
+Observação 2: Como coloquei todos os campos como required, se faltar algum, acontecerá um erro e será logado no console. Se isso acontecer, cancele o request, conserte as variáveis e faça o request novamente.
+
+A resposta deverá ser: 
+{
+  "message": "transaction saved!"
+}
+
+Se você não estiver logado e tentar fazer alguma requisição, receberá a seguinte resposta:
+{
+  "status": 403,
+  "message": "authentication required"
+}
+
+Qualquer dúvida, entre em contato: dani.cohen.rj@gmail.com
+
+
+
+
+
+
+
