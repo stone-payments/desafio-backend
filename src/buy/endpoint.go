@@ -1,4 +1,4 @@
-package product
+package buy
 
 import (
 	"net/http"
@@ -6,13 +6,10 @@ import (
 	"io/ioutil"
 )
 
-func (repository *MongoRepository) GetAllProdutcs(w http.ResponseWriter, r *http.Request) (interface{}, error){
-	return repository.FindAll(), nil
-}
-
 func (repository *MongoRepository) StoreProduct(w http.ResponseWriter, r *http.Request) (interface{}, error) {
-	prod := Product{}
+	prod := Buy{}
 	b, _ := ioutil.ReadAll(r.Body)
+	prod.BuyId = NextBuyID()
 	json.Unmarshal(b, &prod)
 	return repository.Store(&prod)
 }

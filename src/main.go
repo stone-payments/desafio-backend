@@ -1,15 +1,19 @@
 package main
 
 import (
-	"net/http"
-	product2 "product"
+	"github.com/gorilla/mux"
 	"gopkg.in/mgo.v2"
+	"product"
+	"jwtauthorization"
+	"github.com/codegangsta/negroni"
+	"net/http"
+	"fmt"
+	"encoding/json"
 )
-
 
 func main() {
 
-	mux := http.NewServeMux()
+	mux := mux.NewRouter()
 
 	session, err := mgo.Dial("localhost")
 	if err != nil {
@@ -17,15 +21,53 @@ func main() {
 	}
 	defer session.Close()
 
-	handlerProduct := product2.MakeHandler(session)
+	productRepository, _ := product.NewProductRepository("GoChallenge", session)
 
-	mux.Handle("/starstore/product", handlerProduct)
-	mux.Handle("/starstore/products", handlerProduct)
+	mux.Handle("/auth/login", toJson(jwtauthorization.LoginHandler))
+	//	auth.Path("/logout").HandlerFunc(LogoutHandler)
+	//	auth.Path("/signup").HandlerFunc(SignupHandler)
+
+	mux.Handle("/starstore/product", negroni.New(
+		negroni.HandlerFunc(jwtauthorization.ValidateTokenMiddleware),
+		negroni.Wrap(toJson(productRepository.StoreProduct)),
+	)).Methods("POST")
+
+	mux.Handle("/starstore/products", negroni.New(
+		negroni.HandlerFunc(jwtauthorization.ValidateTokenMiddleware),
+		negroni.Wrap(toJson(productRepository.GetAllProdutcs)),
+	)).Methods("GET")
+
+	mux.Handle("/starstore/buy", negroni.New(
+		negroni.HandlerFunc(jwtauthorization.ValidateTokenMiddleware),
+		negroni.Wrap(toJson(productRepository.GetAllProdutcs)),
+	)).Methods("POST")
+
+	mux.Handle("/starstore/history", negroni.New(
+		negroni.HandlerFunc(jwtauthorization.ValidateTokenMiddleware),
+		negroni.Wrap(toJson(productRepository.GetAllProdutcs)),
+	)).Methods("GET")
+
+	mux.Handle("/starstore/history/{clientId}", negroni.New(
+		negroni.HandlerFunc(jwtauthorization.ValidateTokenMiddleware),
+		negroni.Wrap(toJson(productRepository.GetAllProdutcs)),
+	)).Methods("GET")
 
 	http.Handle("/", accessControl(mux))
 
 	http.ListenAndServe(":8080", mux)
 
+}
+
+func HomeHandler(rw http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(rw, "Home")
+}
+
+func toJson(f func(w http.ResponseWriter, r *http.Request) (interface{}, error)) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		response, _ := f(w, r)
+		res1B, _ := json.Marshal(response)
+		fmt.Fprint(w, string(res1B))
+	}
 }
 
 func accessControl(h http.Handler) http.Handler {
