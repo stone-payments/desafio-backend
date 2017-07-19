@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"fmt"
 	"encoding/json"
+	"buy"
+	"history"
 )
 
 func main() {
@@ -22,6 +24,8 @@ func main() {
 	defer session.Close()
 
 	productRepository, _ := product.NewProductRepository("GoChallenge", session)
+	buyRepository, _ := buy.NewBuyRepository("GoChallenge", session)
+	historyRepository, _ := history.NewHistoryRepository("GoChallenge", session)
 
 	mux.Handle("/auth/login", toJson(jwtauthorization.LoginHandler))
 	//	auth.Path("/logout").HandlerFunc(LogoutHandler)
