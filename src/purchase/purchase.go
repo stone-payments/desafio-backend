@@ -1,24 +1,21 @@
-package buy
+package purchase
 
 import (
-	"time"
 	"github.com/pborman/uuid"
 	"gopkg.in/mgo.v2/bson"
 	"gopkg.in/mgo.v2"
 	"errors"
 )
 
-type BuyId string
-
-//Buy model structure
-type Buy struct {
-	BuyId BuyId
+//Purchase model structure
+type Purchase struct {
+	PurchaseId string `json:"purchase_id"`
 	ClientId string `json:"client_id"`
 	ClientName string `json:"client_name"`
 	TotalToPay	uint32 `json:"total_to_pay"`
 	CreditCard	CreditCard `json:"credit_card"`
 }
-//Buy model structure
+//Purchase model structure
 type CreditCard struct {
 	CardNumber string `json:"card_number"`
 	Value uint32 `json:"value"`
@@ -28,14 +25,14 @@ type CreditCard struct {
 }
 
 
-// Repository provides access a Buy store.
-type BuyRepository interface {
-	Store(Buy *Buy)  (*Buy, error)
+// Repository provides access a Purchase store.
+type PurchaseRepository interface {
+	Store(Purchase *Purchase)  (*Purchase, error)
 }
 
 
-func NextBuyID() BuyId {
-	return BuyId(uuid.New())
+func NextPurchaseID() string {
+	return uuid.New()
 }
 
 type MongoRepository struct {
@@ -44,29 +41,29 @@ type MongoRepository struct {
 }
 
 
-func (r *MongoRepository) Store(buy *Buy) (*Buy,error) {
+func (r *MongoRepository) Store(purchase *Purchase) (*Purchase,error) {
 	sess := r.session.Copy()
 	defer sess.Close()
 
-	c := sess.DB(r.db).C("Buy")
+	c := sess.DB(r.db).C("Purchase")
 
-	_, err := c.Upsert(bson.M{"buyId": buy.BuyId}, bson.M{"$set": buy})
+	_, err := c.Upsert(bson.M{"purchaseId": purchase.PurchaseId}, bson.M{"$set": purchase})
 
-	return buy, err
+	return purchase, err
 }
 
-var ErrUnknown = errors.New("unknown buy")
+var ErrUnknown = errors.New("unknown purchase")
 
 
 // NewCargoRepository returns a new instance of a MongoDB cargo repository.
-func NewBuyRepository(db string, session *mgo.Session) (*MongoRepository, error) {
+func NewPurchaseRepository(db string, session *mgo.Session) (*MongoRepository, error) {
 	r := &MongoRepository{
 		db:      db,
 		session: session,
 	}
 
 	index := mgo.Index{
-		Key:        []string{"buyId"},
+		Key:        []string{"purchaseId"},
 		Unique:     true,
 		DropDups:   true,
 		Background: true,
@@ -76,7 +73,7 @@ func NewBuyRepository(db string, session *mgo.Session) (*MongoRepository, error)
 	sess := r.session.Copy()
 	defer sess.Close()
 
-	c := sess.DB(r.db).C("Buy")
+	c := sess.DB(r.db).C("Purchase")
 
 	if err := c.EnsureIndex(index); err != nil {
 		return nil, err

@@ -2,34 +2,41 @@ package history
 
 import (
 	"time"
-	"github.com/pborman/uuid"
 	"gopkg.in/mgo.v2/bson"
 	"gopkg.in/mgo.v2"
 	"errors"
+	"purchase"
+	"github.com/pborman/uuid"
 )
-
-type HistoryId string
 
 //History model structure
 type History struct {
-	HistoryId HistoryId
+	HistoryId string
 	ClientId string `json:"client_id"`
 	PurchaseId string `json:"purchase_id"`
 	Value	uint32 `json:"value"`
 	Date	time.Time `json:"date"`
-	FinalNumber	uint8 `json:"card_number"`
+	FinalNumber	string `json:"card_number"`
 }
+
+func CreateLog(purchase purchase.Purchase) History {
+	s :=purchase.CreditCard.CardNumber
+	finalNumber := s[len(s)-4:]
+	return History{
+		uuid.New(),
+		purchase.ClientId,
+		purchase.PurchaseId,
+		purchase.TotalToPay,
+		time.Now(),
+		finalNumber,
+	}
+}
+
 
 // Repository provides access a History store.
 type HistoryRepository interface {
 	Store(History *History)  (*History, error)
-	Find(id HistoryId) (*History, error)
 	FindAll() []*History
-}
-
-
-func NextHistoryID() HistoryId {
-	return HistoryId(uuid.New())
 }
 
 type MongoRepository struct {
@@ -51,22 +58,6 @@ func (r *MongoRepository) Store(history *History) (*History,error) {
 
 var ErrUnknown = errors.New("unknown history")
 
-func (r *MongoRepository) Find(id HistoryId) (*History, error) {
-	sess := r.session.Copy()
-	defer sess.Close()
-
-	c := sess.DB(r.db).C("History")
-
-	var result History
-	if err := c.Find(bson.M{"historyid": id}).One(&result); err != nil {
-		if err == mgo.ErrNotFound {
-			return nil, ErrUnknown
-		}
-		return nil, err
-	}
-
-	return &result, nil
-}
 
 func (r *MongoRepository) FindAll() []*History {
 	sess := r.session.Copy()

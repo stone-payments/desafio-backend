@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"fmt"
 	"encoding/json"
-	"buy"
+	"purchase"
 	"history"
 )
 
@@ -24,7 +24,7 @@ func main() {
 	defer session.Close()
 
 	productRepository, _ := product.NewProductRepository("GoChallenge", session)
-	buyRepository, _ := buy.NewBuyRepository("GoChallenge", session)
+	buyRepository, _ := purchase.NewPurchaseRepository("GoChallenge", session)
 	historyRepository, _ := history.NewHistoryRepository("GoChallenge", session)
 
 	mux.Handle("/auth/login", toJson(jwtauthorization.LoginHandler))
@@ -41,9 +41,11 @@ func main() {
 		negroni.Wrap(toJson(productRepository.GetAllProdutcs)),
 	)).Methods("GET")
 
-	mux.Handle("/starstore/buy", negroni.New(
+	mux.Handle("/starstore/purchase", negroni.New(
 		negroni.HandlerFunc(jwtauthorization.ValidateTokenMiddleware),
-		negroni.Wrap(toJson(productRepository.GetAllProdutcs)),
+		negroni.HandlerFunc(buyRepository.CreatePurchaseId),
+		negroni.HandlerFunc(historyRepository.CreateHistory),
+		negroni.Wrap(toJson(buyRepository.StorePurchase)),
 	)).Methods("POST")
 
 	mux.Handle("/starstore/history", negroni.New(
@@ -58,7 +60,7 @@ func main() {
 
 	http.Handle("/", accessControl(mux))
 
-	http.ListenAndServe(":8080", mux)
+	http.ListenAndServe(":8000", mux)
 
 }
 
