@@ -19,7 +19,7 @@ type Purchase struct {
 type CreditCard struct {
 	CardNumber string `json:"card_number"`
 	Value uint32 `json:"value"`
-	Cvv uint8 `json:"cvv"`
+	Cvv uint32 `json:"cvv"`
 	CardHolderName	string `json:"card_holder_name"`
 	ExpDate	string `json:"exp_date"`
 }

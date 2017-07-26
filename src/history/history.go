@@ -37,6 +37,7 @@ func CreateLog(purchase purchase.Purchase) History {
 type HistoryRepository interface {
 	Store(History *History)  (*History, error)
 	FindAll() []*History
+	FindByClientId() []*History
 }
 
 type MongoRepository struct {
@@ -54,6 +55,21 @@ func (r *MongoRepository) Store(history *History) (*History,error) {
 	_, err := c.Upsert(bson.M{"historyid": history.HistoryId}, bson.M{"$set": history})
 
 	return history, err
+}
+
+
+func (r *MongoRepository) FindByClientId(cId string) interface{} {
+	sess := r.session.Copy()
+	defer sess.Close()
+
+	c := sess.DB(r.db).C("History")
+
+	var result []*History
+	if err := c.Find(bson.M{"client_id": cId}).All(&result); err != nil {
+		return []*History{}
+	}
+
+	return result
 }
 
 var ErrUnknown = errors.New("unknown history")

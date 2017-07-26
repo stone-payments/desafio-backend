@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"encoding/json"
 	"io/ioutil"
+	"time"
 )
 
 func (repository *MongoRepository) GetAllProdutcs(w http.ResponseWriter, r *http.Request) (interface{}, error){
@@ -14,5 +15,6 @@ func (repository *MongoRepository) StoreProduct(w http.ResponseWriter, r *http.R
 	prod := Product{}
 	b, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(b, &prod)
+	prod.Date = time.Now()
 	return repository.Store(&prod)
 }

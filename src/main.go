@@ -13,6 +13,8 @@ import (
 	"history"
 )
 
+
+
 func main() {
 
 	mux := mux.NewRouter()
@@ -41,7 +43,7 @@ func main() {
 		negroni.Wrap(toJson(productRepository.GetAllProdutcs)),
 	)).Methods("GET")
 
-	mux.Handle("/starstore/purchase", negroni.New(
+	mux.Handle("/starstore/buy", negroni.New(
 		negroni.HandlerFunc(jwtauthorization.ValidateTokenMiddleware),
 		negroni.HandlerFunc(buyRepository.CreatePurchaseId),
 		negroni.HandlerFunc(historyRepository.CreateHistory),
@@ -50,17 +52,21 @@ func main() {
 
 	mux.Handle("/starstore/history", negroni.New(
 		negroni.HandlerFunc(jwtauthorization.ValidateTokenMiddleware),
-		negroni.Wrap(toJson(productRepository.GetAllProdutcs)),
+		negroni.Wrap(toJson(historyRepository.GetAll)),
 	)).Methods("GET")
 
 	mux.Handle("/starstore/history/{clientId}", negroni.New(
 		negroni.HandlerFunc(jwtauthorization.ValidateTokenMiddleware),
-		negroni.Wrap(toJson(productRepository.GetAllProdutcs)),
+		negroni.Wrap(toJson(historyRepository.GetHistoryByCl)),
 	)).Methods("GET")
 
-	http.Handle("/", accessControl(mux))
+	mux.Handle("/", accessControl(mux))
 
-	http.ListenAndServe(":8000", mux)
+	n := negroni.New()
+	n.Use(negroni.NewLogger())
+	n.UseHandler(mux)
+
+	http.ListenAndServe(":8000", n)
 
 }
 
