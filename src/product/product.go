@@ -69,7 +69,7 @@ func (r *MongoRepository) Find(id ProductId) (*Product, error) {
 	return &result, nil
 }
 
-func (r *MongoRepository) FindAll() []*Product {
+func (r *MongoRepository) FindAll() ([]*Product, error) {
 	sess := r.session.Copy()
 	defer sess.Close()
 
@@ -77,10 +77,10 @@ func (r *MongoRepository) FindAll() []*Product {
 
 	var result []*Product
 	if err := c.Find(bson.M{}).All(&result); err != nil {
-		return []*Product{}
+		return nil, err
 	}
 
-	return result
+	return result, nil
 }
 
 // NewCargoRepository returns a new instance of a MongoDB cargo repository.

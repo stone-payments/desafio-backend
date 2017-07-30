@@ -11,13 +11,14 @@ import (
 	"encoding/json"
 	"purchase"
 	"history"
+	"infrastructure"
 )
 
 
 
 func main() {
 
-	mux := mux.NewRouter()
+	m := mux.NewRouter()
 
 	session, err := mgo.Dial("localhost")
 	if err != nil {
@@ -29,42 +30,38 @@ func main() {
 	buyRepository, _ := purchase.NewPurchaseRepository("GoChallenge", session)
 	historyRepository, _ := history.NewHistoryRepository("GoChallenge", session)
 
-	mux.Handle("/auth/login", toJson(jwtauthorization.LoginHandler))
-	//	auth.Path("/logout").HandlerFunc(LogoutHandler)
-	//	auth.Path("/signup").HandlerFunc(SignupHandler)
 
-	mux.Handle("/starstore/product", negroni.New(
-		negroni.HandlerFunc(jwtauthorization.ValidateTokenMiddleware),
-		negroni.Wrap(toJson(productRepository.StoreProduct)),
+
+	middlewareAuth := infrastructure.AppHandler(jwtauthorization.ValidateTokenMiddleware).Build()
+
+	m.Handle("/starstore/auth/login", toJson(jwtauthorization.LoginHandler))
+	m.Handle("/starstore/product", negroni.New(
+		infrastructure.AppHandler(productRepository.StoreProduct).BuildResponse(),
 	)).Methods("POST")
 
-	mux.Handle("/starstore/products", negroni.New(
-		negroni.HandlerFunc(jwtauthorization.ValidateTokenMiddleware),
-		negroni.Wrap(toJson(productRepository.GetAllProdutcs)),
+	m.Handle("/starstore/products", negroni.New(
+		infrastructure.AppHandler(productRepository.GetAllProdutcs).BuildResponse(),
 	)).Methods("GET")
 
-	mux.Handle("/starstore/buy", negroni.New(
-		negroni.HandlerFunc(jwtauthorization.ValidateTokenMiddleware),
-		negroni.HandlerFunc(buyRepository.CreatePurchaseId),
-		negroni.HandlerFunc(historyRepository.CreateHistory),
-		negroni.Wrap(toJson(buyRepository.StorePurchase)),
+	m.Handle("/starstore/buy", negroni.New(
+		infrastructure.AppHandler(buyRepository.CreatePurchaseId).Build(),
+		infrastructure.AppHandler(historyRepository.CreateHistory).Build(),
+		infrastructure.AppHandler(buyRepository.StorePurchase).BuildResponse(),
 	)).Methods("POST")
 
-	mux.Handle("/starstore/history", negroni.New(
-		negroni.HandlerFunc(jwtauthorization.ValidateTokenMiddleware),
-		negroni.Wrap(toJson(historyRepository.GetAll)),
+	m.Handle("/starstore/history", negroni.New(
+		infrastructure.AppHandler(historyRepository.GetAll).BuildResponse(),
 	)).Methods("GET")
 
-	mux.Handle("/starstore/history/{clientId}", negroni.New(
-		negroni.HandlerFunc(jwtauthorization.ValidateTokenMiddleware),
-		negroni.Wrap(toJson(historyRepository.GetHistoryByCl)),
+	m.Handle("/starstore/history/{clientId}", negroni.New(
+		infrastructure.AppHandler(historyRepository.GetHistoryByCl).BuildResponse(),
 	)).Methods("GET")
-
-	mux.Handle("/", accessControl(mux))
 
 	n := negroni.New()
 	n.Use(negroni.NewLogger())
-	n.UseHandler(mux)
+	n.Use(accessControl(m))
+	n.UseFunc(middlewareAuth)
+	n.UseHandler(m)
 
 	http.ListenAndServe(":8000", n)
 
@@ -82,8 +79,8 @@ func toJson(f func(w http.ResponseWriter, r *http.Request) (interface{}, error))
 	}
 }
 
-func accessControl(h http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+func accessControl(h http.Handler) negroni.Handler {
+	return negroni.HandlerFunc(func(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type")
@@ -91,8 +88,7 @@ func accessControl(h http.Handler) http.Handler {
 		if r.Method == "OPTIONS" {
 			return
 		}
-
-		h.ServeHTTP(w, r)
+		next(w,r)
 	})
 }
 

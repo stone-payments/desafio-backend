@@ -5,20 +5,23 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"github.com/gorilla/context"
+	"infrastructure"
 )
 
-func (repository *MongoRepository) StorePurchase(w http.ResponseWriter, r *http.Request) (interface{}, error) {
+func (repository *MongoRepository) StorePurchase(r *http.Request) (interface{}, *infrastructure.AppError) {
 	p := context.Get(r, "purchase").(Purchase)
-	return repository.Store(&p)
+	pur, err := repository.Store(&p)
+	if err != nil {
+		return nil, &infrastructure.AppError{err, "Error trying to save", 500}
+	}
+	return pur, nil
 }
 
-func (repository *MongoRepository) CreatePurchaseId(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-
+func (repository *MongoRepository) CreatePurchaseId(r *http.Request) (interface{}, *infrastructure.AppError){
 	//creates a purchase id and input him at request.
 	r.Header.Add("purchase_id", NextPurchaseID())
 	context.Set(r, "purchase", Extract(r))
-
-	next(w, r)
+	return nil, nil
 }
 
 func Extract(r *http.Request) Purchase {

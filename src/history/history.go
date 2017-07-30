@@ -52,13 +52,15 @@ func (r *MongoRepository) Store(history *History) (*History,error) {
 
 	c := sess.DB(r.db).C("History")
 
-	_, err := c.Upsert(bson.M{"historyid": history.HistoryId}, bson.M{"$set": history})
+	if _, err := c.Upsert(bson.M{"historyid": history.HistoryId}, bson.M{"$set": history}); err != nil {
+		return nil, err
+	}
 
-	return history, err
+	return history, nil
 }
 
 
-func (r *MongoRepository) FindByClientId(cId string) interface{} {
+func (r *MongoRepository) FindByClientId(cId string) ([]*History, error) {
 	sess := r.session.Copy()
 	defer sess.Close()
 
@@ -66,16 +68,16 @@ func (r *MongoRepository) FindByClientId(cId string) interface{} {
 
 	var result []*History
 	if err := c.Find(bson.M{"client_id": cId}).All(&result); err != nil {
-		return []*History{}
+		return nil, err
 	}
 
-	return result
+	return result, nil
 }
 
 var ErrUnknown = errors.New("unknown history")
 
 
-func (r *MongoRepository) FindAll() []*History {
+func (r *MongoRepository) FindAll() ([]*History, error) {
 	sess := r.session.Copy()
 	defer sess.Close()
 
@@ -83,10 +85,10 @@ func (r *MongoRepository) FindAll() []*History {
 
 	var result []*History
 	if err := c.Find(bson.M{}).All(&result); err != nil {
-		return []*History{}
+		return nil, err
 	}
 
-	return result
+	return result, nil
 }
 
 // NewCargoRepository returns a new instance of a MongoDB cargo repository.

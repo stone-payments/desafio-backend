@@ -10,26 +10,17 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
 	"errors"
+	"infrastructure"
 )
 
 /* Set up a global string for our secret */
 var mySigningKey = []byte("b0HMdArafow2NR83a2lpeu8nGVSbxJmr")
 
 
+
+var filteredUriAuthToken = []string{"/starstore/auth"}
+
 //STRUCT DEFINITIONS
-
-
-type UserCredentials struct {
-	Username	string  `json:"username"`
-	Password	string	`json:"password"`
-}
-
-type User struct {
-	ID			int 	`json:"id"`
-	Name		string  `json:"name"`
-	Username	string  `json:"username"`
-	Password	string	`json:"password"`
-}
 
 type Response struct {
 	Data	string	`json:"data"`
@@ -43,7 +34,7 @@ type Token struct {
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) (interface{}, error){
 
-	var user UserCredentials
+	var user infrastructure.UserCredentials
 
 	//decode request into UserCredentials struct
 	err := json.NewDecoder(r.Body).Decode(&user)
@@ -93,24 +84,25 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) (interface{}, error){
 
 
 //AUTH TOKEN VALIDATION
+func ValidateTokenMiddleware(r *http.Request) (interface{}, *infrastructure.AppError) {
 
-
-func ValidateTokenMiddleware(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-
+	if infrastructure.Any(filteredUriAuthToken, func(v string) bool {
+		return strings.HasPrefix(r.RequestURI, v)
+	}) {
+		return nil, nil;
+	}
 	//validate token
 	token, err := request.ParseFromRequest(r, request.OAuth2Extractor, keyLookupFunc);
 
 	if err == nil {
 
 		if token.Valid{
-			next(w, r)
+			return nil, nil;
 		} else {
-			w.WriteHeader(http.StatusUnauthorized)
-			fmt.Fprint(w, "Token is not valid")
+			return nil, &infrastructure.AppError{nil,"Token is not valid", http.StatusUnauthorized};
 		}
 	} else {
-		w.WriteHeader(http.StatusUnauthorized)
-		fmt.Fprint(w,err)
+		return nil, &infrastructure.AppError{err,"Token is not valid", http.StatusUnauthorized};
 	}
 
 }
