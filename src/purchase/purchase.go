@@ -25,12 +25,6 @@ type CreditCard struct {
 }
 
 
-// Repository provides access a Purchase store.
-type PurchaseRepository interface {
-	Store(Purchase *Purchase)  (*Purchase, error)
-}
-
-
 func NextPurchaseID() string {
 	return uuid.New()
 }

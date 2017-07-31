@@ -21,14 +21,6 @@ type Product struct {
 	Date        time.Time `json:"date"`
 }
 
-// Repository provides access a product store.
-type ProductRepository interface {
-	Store(product *Product)  (*Product, error)
-	Find(id ProductId) (*Product, error)
-	FindAll() []*Product
-}
-
-
 func NextTrackingID() ProductId {
 	return ProductId(uuid.New())
 }

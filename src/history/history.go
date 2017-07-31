@@ -32,14 +32,6 @@ func CreateLog(purchase purchase.Purchase) History {
 	}
 }
 
-
-// Repository provides access a History store.
-type HistoryRepository interface {
-	Store(History *History)  (*History, error)
-	FindAll() []*History
-	FindByClientId() []*History
-}
-
 type MongoRepository struct {
 	db      string
 	session *mgo.Session
