@@ -21,6 +21,7 @@ func (repository *MongoRepository) StoreProduct(r *http.Request) (interface{}, *
 	b, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(b, &prod)
 	prod.Date = time.Now()
+	prod.ProductId = NextTrackingID()
 	p, err := repository.Store(&prod)
 
 	if err != nil {

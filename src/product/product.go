@@ -6,6 +6,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 	"gopkg.in/mgo.v2"
 	"errors"
+	"memcached"
 )
 
 type ProductId string
@@ -39,38 +40,55 @@ func (r *MongoRepository) Store(product *Product) (*Product,error) {
 
 	_, err := c.Upsert(bson.M{"productid": product.ProductId}, bson.M{"$set": product})
 
+	mkey := "product_by_id_"+string(product.ProductId)
+	memcached.Store(mkey, product)
+
+
 	return product, err
 }
 
 var ErrUnknown = errors.New("unknown product")
 
 func (r *MongoRepository) Find(id ProductId) (*Product, error) {
+	var result Product
+	mkey := "product_by_id_"+string(id)
+	memcached.Get(mkey, &result)
+	if &result != nil {
+		return &result, nil
+	}
 	sess := r.session.Copy()
 	defer sess.Close()
 
 	c := sess.DB(r.db).C("Product")
 
-	var result Product
 	if err := c.Find(bson.M{"productid": id}).One(&result); err != nil {
 		if err == mgo.ErrNotFound {
 			return nil, ErrUnknown
 		}
 		return nil, err
 	}
+	memcached.Store(mkey, &result)
 
 	return &result, nil
 }
 
 func (r *MongoRepository) FindAll() ([]*Product, error) {
+	var result []*Product
+	mkey := "product"
+	memcached.Get(mkey, &result)
+	if result != nil {
+		return result, nil
+	}
 	sess := r.session.Copy()
 	defer sess.Close()
 
 	c := sess.DB(r.db).C("Product")
 
-	var result []*Product
 	if err := c.Find(bson.M{}).All(&result); err != nil {
 		return nil, err
 	}
+
+	memcached.Store(mkey, result)
 
 	return result, nil
 }

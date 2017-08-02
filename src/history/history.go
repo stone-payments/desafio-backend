@@ -7,6 +7,7 @@ import (
 	"errors"
 	"purchase"
 	"github.com/pborman/uuid"
+	"memcached"
 )
 
 //History model structure
@@ -39,6 +40,7 @@ type MongoRepository struct {
 
 
 func (r *MongoRepository) Store(history *History) (*History,error) {
+
 	sess := r.session.Copy()
 	defer sess.Close()
 
@@ -48,20 +50,32 @@ func (r *MongoRepository) Store(history *History) (*History,error) {
 		return nil, err
 	}
 
+	memcached.Store("history_by_client_id_"+history.ClientId, history)
+	memcached.Store("history_by_id_"+history.HistoryId, history)
+
 	return history, nil
 }
 
 
 func (r *MongoRepository) FindByClientId(cId string) ([]*History, error) {
+	var result []*History
+	mkey := "history_by_client_id_"+cId
+	memcached.Get(mkey, &result)
+	if result != nil {
+		return result, nil
+	}
+
 	sess := r.session.Copy()
 	defer sess.Close()
 
 	c := sess.DB(r.db).C("History")
 
-	var result []*History
+
 	if err := c.Find(bson.M{"client_id": cId}).All(&result); err != nil {
 		return nil, err
 	}
+
+	memcached.Store(mkey, result)
 
 	return result, nil
 }
@@ -70,15 +84,22 @@ var ErrUnknown = errors.New("unknown history")
 
 
 func (r *MongoRepository) FindAll() ([]*History, error) {
+	var result []*History
+	mkey := "history"
+	memcached.Get(mkey, &result)
+	if result != nil {
+		return result, nil
+	}
+
 	sess := r.session.Copy()
 	defer sess.Close()
 
 	c := sess.DB(r.db).C("History")
 
-	var result []*History
 	if err := c.Find(bson.M{}).All(&result); err != nil {
 		return nil, err
 	}
+	memcached.Store(mkey, result)
 
 	return result, nil
 }
