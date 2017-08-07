@@ -11,6 +11,7 @@ import (
 	"github.com/dgrijalva/jwt-go/request"
 	"errors"
 	"infrastructure"
+	"client"
 )
 
 /* Set up a global string for our secret */
@@ -18,7 +19,11 @@ var mySigningKey = []byte("b0HMdArafow2NR83a2lpeu8nGVSbxJmr")
 
 
 
-var filteredUriAuthToken = []string{"/starstore/auth"}
+var filteredUriAuthToken = []string{"/starstore/auth", "/starstore/client"}
+
+type JWTAuth struct {
+	CR *client.ClientRepository
+}
 
 //STRUCT DEFINITIONS
 
@@ -30,11 +35,16 @@ type Token struct {
 	Token 	string    `json:"token"`
 }
 
+type AuthLogin struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
 
 
-func LoginHandler(w http.ResponseWriter, r *http.Request) (interface{}, error){
 
-	var user infrastructure.UserCredentials
+func (auth *JWTAuth) LoginHandler(w http.ResponseWriter, r *http.Request) (interface{}, error){
+
+	var user AuthLogin
 
 	//decode request into UserCredentials struct
 	err := json.NewDecoder(r.Body).Decode(&user)
@@ -46,12 +56,11 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) (interface{}, error){
 	fmt.Println(user.Username, user.Password)
 
 	//validate user credentials
-	if strings.ToLower(user.Username) != "alexcons" {
-		if user.Password != "kappa123" {
-			w.WriteHeader(http.StatusForbidden)
-			fmt.Println("Error logging in")
-			return nil, errors.New("Invalid credentials")
-		}
+	u, _ := auth.CR.FindByUsername(user.Username)
+
+	if !client.IsPassCo([]byte(user.Password), []byte(u.Password)){
+		w.WriteHeader(http.StatusForbidden)
+		return nil, errors.New("Invalid credentials")
 	}
 
 	//create a rsa 256 signer
@@ -74,6 +83,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) (interface{}, error){
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintln(w, "Error while signing the token")
 		log.Printf("Error signing token: %v\n", err)
+		return nil, err;
 	}
 
 	//create a token instance using the token string

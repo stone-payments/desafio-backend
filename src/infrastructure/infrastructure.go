@@ -9,25 +9,13 @@ import (
 )
 
 type MongoRepository struct {
-	db      string
-	session *mgo.Session
+	DB      string
+	Session *mgo.Session
 }
 
 type Context struct {
-	User	  interface{}
-	Purchase  interface{}
-}
-
-type UserCredentials struct {
-	Username	string  `json:"username"`
-	Password	string	`json:"password"`
-}
-
-type User struct {
-	ID			int 	`json:"id"`
-	Name		string  `json:"name"`
-	Username	string  `json:"username"`
-	Password	string	`json:"password"`
+	User	  struct{}
+	Purchase  struct{}
 }
 
 type AppError struct {

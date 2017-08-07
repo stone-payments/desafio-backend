@@ -8,7 +8,7 @@ import (
 	"infrastructure"
 )
 
-func (repository *MongoRepository) StorePurchase(r *http.Request) (interface{}, *infrastructure.AppError) {
+func (repository *PurchaseRepository) StorePurchase(r *http.Request) (interface{}, *infrastructure.AppError) {
 	p := context.Get(r, "purchase").(Purchase)
 	pur, err := repository.Store(&p)
 	if err != nil {
@@ -17,7 +17,7 @@ func (repository *MongoRepository) StorePurchase(r *http.Request) (interface{}, 
 	return pur, nil
 }
 
-func (repository *MongoRepository) CreatePurchaseId(r *http.Request) (interface{}, *infrastructure.AppError){
+func (repository *PurchaseRepository) CreatePurchaseId(r *http.Request) (interface{}, *infrastructure.AppError){
 	//creates a purchase id and input him at request.
 	r.Header.Add("purchase_id", NextPurchaseID())
 	context.Set(r, "purchase", Extract(r))

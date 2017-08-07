@@ -12,6 +12,7 @@ import (
 	"purchase"
 	"history"
 	"infrastructure"
+	"client"
 )
 
 
@@ -26,15 +27,23 @@ func main() {
 	}
 	defer session.Close()
 
-	productRepository, _ := product.NewProductRepository("GoChallenge", session)
-	buyRepository, _ := purchase.NewPurchaseRepository("GoChallenge", session)
-	historyRepository, _ := history.NewHistoryRepository("GoChallenge", session)
+	rep := &infrastructure.MongoRepository{"GoChallenge", session}
 
+	productRepository, _ := product.NewProductRepository(rep)
+	buyRepository, _ := purchase.NewPurchaseRepository(rep)
+	historyRepository, _ := history.NewHistoryRepository(rep)
+	clientRepository, _ := client.NewClientRepository(rep)
 
+	authLogin := &jwtauthorization.JWTAuth{clientRepository}
 
 	middlewareAuth := infrastructure.AppHandler(jwtauthorization.ValidateTokenMiddleware).Build()
 
-	m.Handle("/starstore/auth/login", toJson(jwtauthorization.LoginHandler))
+	m.Handle("/starstore/auth/login", toJson(authLogin.LoginHandler))
+
+	m.Handle("/starstore/client", negroni.New(
+		infrastructure.AppHandler(clientRepository.StoreClient).BuildResponse(),
+	)).Methods("POST")
+
 	m.Handle("/starstore/product", negroni.New(
 		infrastructure.AppHandler(productRepository.StoreProduct).BuildResponse(),
 	)).Methods("POST")

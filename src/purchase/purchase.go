@@ -5,6 +5,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 	"gopkg.in/mgo.v2"
 	"errors"
+	"infrastructure"
 )
 
 //Purchase model structure
@@ -29,17 +30,16 @@ func NextPurchaseID() string {
 	return uuid.New()
 }
 
-type MongoRepository struct {
-	db      string
-	session *mgo.Session
+
+type PurchaseRepository struct {
+	*infrastructure.MongoRepository
 }
 
-
-func (r *MongoRepository) Store(purchase *Purchase) (*Purchase,error) {
-	sess := r.session.Copy()
+func (r *PurchaseRepository) Store(purchase *Purchase) (*Purchase,error) {
+	sess := r.Session.Copy()
 	defer sess.Close()
 
-	c := sess.DB(r.db).C("Purchase")
+	c := sess.DB(r.DB).C("Purchase")
 
 	_, err := c.Upsert(bson.M{"purchaseId": purchase.PurchaseId}, bson.M{"$set": purchase})
 
@@ -50,11 +50,8 @@ var ErrUnknown = errors.New("unknown purchase")
 
 
 // NewCargoRepository returns a new instance of a MongoDB cargo repository.
-func NewPurchaseRepository(db string, session *mgo.Session) (*MongoRepository, error) {
-	r := &MongoRepository{
-		db:      db,
-		session: session,
-	}
+func NewPurchaseRepository(repository *infrastructure.MongoRepository) (*PurchaseRepository, error) {
+	r := &PurchaseRepository{repository}
 
 	index := mgo.Index{
 		Key:        []string{"purchaseId"},
@@ -64,10 +61,10 @@ func NewPurchaseRepository(db string, session *mgo.Session) (*MongoRepository, e
 		Sparse:     true,
 	}
 
-	sess := r.session.Copy()
+	sess := r.Session.Copy()
 	defer sess.Close()
 
-	c := sess.DB(r.db).C("Purchase")
+	c := sess.DB(r.DB).C("Purchase")
 
 	if err := c.EnsureIndex(index); err != nil {
 		return nil, err

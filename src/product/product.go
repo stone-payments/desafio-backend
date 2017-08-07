@@ -7,6 +7,7 @@ import (
 	"gopkg.in/mgo.v2"
 	"errors"
 	"memcached"
+	"infrastructure"
 )
 
 type ProductId string
@@ -26,17 +27,16 @@ func NextTrackingID() ProductId {
 	return ProductId(uuid.New())
 }
 
-type MongoRepository struct {
-	db      string
-	session *mgo.Session
+type ProductRepository struct {
+	*infrastructure.MongoRepository
 }
 
 
-func (r *MongoRepository) Store(product *Product) (*Product,error) {
-	sess := r.session.Copy()
+func (r *ProductRepository) Store(product *Product) (*Product,error) {
+	sess := r.Session.Copy()
 	defer sess.Close()
 
-	c := sess.DB(r.db).C("Product")
+	c := sess.DB(r.DB).C("Product")
 
 	_, err := c.Upsert(bson.M{"productid": product.ProductId}, bson.M{"$set": product})
 
@@ -49,17 +49,17 @@ func (r *MongoRepository) Store(product *Product) (*Product,error) {
 
 var ErrUnknown = errors.New("unknown product")
 
-func (r *MongoRepository) Find(id ProductId) (*Product, error) {
+func (r *ProductRepository) Find(id ProductId) (*Product, error) {
 	var result Product
 	mkey := "product_by_id_"+string(id)
 	memcached.Get(mkey, &result)
 	if &result != nil {
 		return &result, nil
 	}
-	sess := r.session.Copy()
+	sess := r.Session.Copy()
 	defer sess.Close()
 
-	c := sess.DB(r.db).C("Product")
+	c := sess.DB(r.DB).C("Product")
 
 	if err := c.Find(bson.M{"productid": id}).One(&result); err != nil {
 		if err == mgo.ErrNotFound {
@@ -72,17 +72,17 @@ func (r *MongoRepository) Find(id ProductId) (*Product, error) {
 	return &result, nil
 }
 
-func (r *MongoRepository) FindAll() ([]*Product, error) {
+func (r *ProductRepository) FindAll() ([]*Product, error) {
 	var result []*Product
 	mkey := "product"
 	memcached.Get(mkey, &result)
 	if result != nil {
 		return result, nil
 	}
-	sess := r.session.Copy()
+	sess := r.Session.Copy()
 	defer sess.Close()
 
-	c := sess.DB(r.db).C("Product")
+	c := sess.DB(r.DB).C("Product")
 
 	if err := c.Find(bson.M{}).All(&result); err != nil {
 		return nil, err
@@ -94,11 +94,8 @@ func (r *MongoRepository) FindAll() ([]*Product, error) {
 }
 
 // NewCargoRepository returns a new instance of a MongoDB cargo repository.
-func NewProductRepository(db string, session *mgo.Session) (*MongoRepository, error) {
-	r := &MongoRepository{
-		db:      db,
-		session: session,
-	}
+func NewProductRepository(repository *infrastructure.MongoRepository) (*ProductRepository, error) {
+	r := &ProductRepository{repository}
 
 	index := mgo.Index{
 		Key:        []string{"productid"},
@@ -108,10 +105,10 @@ func NewProductRepository(db string, session *mgo.Session) (*MongoRepository, er
 		Sparse:     true,
 	}
 
-	sess := r.session.Copy()
+	sess := r.Session.Copy()
 	defer sess.Close()
 
-	c := sess.DB(r.db).C("Product")
+	c := sess.DB(r.DB).C("Product")
 
 	if err := c.EnsureIndex(index); err != nil {
 		return nil, err

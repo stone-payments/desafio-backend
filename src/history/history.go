@@ -8,6 +8,7 @@ import (
 	"purchase"
 	"github.com/pborman/uuid"
 	"memcached"
+	"infrastructure"
 )
 
 //History model structure
@@ -33,18 +34,17 @@ func CreateLog(purchase purchase.Purchase) History {
 	}
 }
 
-type MongoRepository struct {
-	db      string
-	session *mgo.Session
+type HistoryRepository struct {
+	*infrastructure.MongoRepository
 }
 
 
-func (r *MongoRepository) Store(history *History) (*History,error) {
+func (r *HistoryRepository) Store(history *History) (*History,error) {
 
-	sess := r.session.Copy()
+	sess := r.Session.Copy()
 	defer sess.Close()
 
-	c := sess.DB(r.db).C("History")
+	c := sess.DB(r.DB).C("History")
 
 	if _, err := c.Upsert(bson.M{"historyid": history.HistoryId}, bson.M{"$set": history}); err != nil {
 		return nil, err
@@ -57,7 +57,7 @@ func (r *MongoRepository) Store(history *History) (*History,error) {
 }
 
 
-func (r *MongoRepository) FindByClientId(cId string) ([]*History, error) {
+func (r *HistoryRepository) FindByClientId(cId string) ([]*History, error) {
 	var result []*History
 	mkey := "history_by_client_id_"+cId
 	memcached.Get(mkey, &result)
@@ -65,10 +65,10 @@ func (r *MongoRepository) FindByClientId(cId string) ([]*History, error) {
 		return result, nil
 	}
 
-	sess := r.session.Copy()
+	sess := r.Session.Copy()
 	defer sess.Close()
 
-	c := sess.DB(r.db).C("History")
+	c := sess.DB(r.DB).C("History")
 
 
 	if err := c.Find(bson.M{"client_id": cId}).All(&result); err != nil {
@@ -83,7 +83,7 @@ func (r *MongoRepository) FindByClientId(cId string) ([]*History, error) {
 var ErrUnknown = errors.New("unknown history")
 
 
-func (r *MongoRepository) FindAll() ([]*History, error) {
+func (r *HistoryRepository) FindAll() ([]*History, error) {
 	var result []*History
 	mkey := "history"
 	memcached.Get(mkey, &result)
@@ -91,10 +91,10 @@ func (r *MongoRepository) FindAll() ([]*History, error) {
 		return result, nil
 	}
 
-	sess := r.session.Copy()
+	sess := r.Session.Copy()
 	defer sess.Close()
 
-	c := sess.DB(r.db).C("History")
+	c := sess.DB(r.DB).C("History")
 
 	if err := c.Find(bson.M{}).All(&result); err != nil {
 		return nil, err
@@ -104,12 +104,8 @@ func (r *MongoRepository) FindAll() ([]*History, error) {
 	return result, nil
 }
 
-// NewCargoRepository returns a new instance of a MongoDB cargo repository.
-func NewHistoryRepository(db string, session *mgo.Session) (*MongoRepository, error) {
-	r := &MongoRepository{
-		db:      db,
-		session: session,
-	}
+func NewHistoryRepository(repository *infrastructure.MongoRepository) (*HistoryRepository, error) {
+	r := &HistoryRepository{repository}
 
 	index := mgo.Index{
 		Key:        []string{"historyid"},
@@ -119,10 +115,10 @@ func NewHistoryRepository(db string, session *mgo.Session) (*MongoRepository, er
 		Sparse:     true,
 	}
 
-	sess := r.session.Copy()
+	sess := r.Session.Copy()
 	defer sess.Close()
 
-	c := sess.DB(r.db).C("History")
+	c := sess.DB(r.DB).C("History")
 
 	if err := c.EnsureIndex(index); err != nil {
 		return nil, err

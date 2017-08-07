@@ -8,7 +8,7 @@ import (
 	"infrastructure"
 )
 
-func (repository *MongoRepository) GetAllProdutcs(r *http.Request) (interface{}, *infrastructure.AppError){
+func (repository *ProductRepository) GetAllProdutcs(r *http.Request) (interface{}, *infrastructure.AppError){
 	prod, err := repository.FindAll()
 	if err != nil {
 		return nil, &infrastructure.AppError{err, "Error trying to get", 500}
@@ -16,7 +16,7 @@ func (repository *MongoRepository) GetAllProdutcs(r *http.Request) (interface{},
 	return prod, nil
 }
 
-func (repository *MongoRepository) StoreProduct(r *http.Request) (interface{}, *infrastructure.AppError) {
+func (repository *ProductRepository) StoreProduct(r *http.Request) (interface{}, *infrastructure.AppError) {
 	prod := Product{}
 	b, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(b, &prod)
