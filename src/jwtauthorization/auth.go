@@ -4,12 +4,10 @@ import (
 	"net/http"
 	"fmt"
 	"encoding/json"
-	"log"
 	"strings"
 	"time"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
-	"errors"
 	"infrastructure"
 	"client"
 )
@@ -42,25 +40,26 @@ type AuthLogin struct {
 
 
 
-func (auth *JWTAuth) LoginHandler(w http.ResponseWriter, r *http.Request) (interface{}, error){
+func (auth *JWTAuth) LoginHandler(r *http.Request) (interface{}, *infrastructure.AppError){
 
 	var user AuthLogin
 
 	//decode request into UserCredentials struct
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
-		w.WriteHeader(http.StatusForbidden)
-		return nil, errors.New("Error in request")
+		return nil, &infrastructure.AppError{err, "Error in request", 401}
 	}
 
 	fmt.Println(user.Username, user.Password)
 
 	//validate user credentials
-	u, _ := auth.CR.FindByUsername(user.Username)
+	u, err := auth.CR.FindByUsername(user.Username)
+	if err != nil {
+		return nil, &infrastructure.AppError{err, "Invalid credentials", 401}
+	}
 
-	if !client.IsPassCo([]byte(user.Password), []byte(u.Password)){
-		w.WriteHeader(http.StatusForbidden)
-		return nil, errors.New("Invalid credentials")
+	if !client.IsPassCo([]byte(user.Password), []byte(u.Password), []byte(u.Salt)){
+		return nil, &infrastructure.AppError{err, "Invalid credentials", 401}
 	}
 
 	//create a rsa 256 signer
@@ -71,19 +70,12 @@ func (auth *JWTAuth) LoginHandler(w http.ResponseWriter, r *http.Request) (inter
 		"iss" : "admin",
 		"exp" : time.Now().Add(time.Minute * 20).Unix(),
 		"iat": time.Now().Unix(),
-		"CustomUserInfo": struct {
-			Name	string
-			Role	string
-		}{user.Username, "Member"},
 	}
 
 	tokenString, err := signer.SignedString(mySigningKey)
 
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintln(w, "Error while signing the token")
-		log.Printf("Error signing token: %v\n", err)
-		return nil, err;
+		return nil, &infrastructure.AppError{err, "Error signing token", 500};
 	}
 
 	//create a token instance using the token string

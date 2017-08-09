@@ -7,8 +7,6 @@ import (
 	"jwtauthorization"
 	"github.com/codegangsta/negroni"
 	"net/http"
-	"fmt"
-	"encoding/json"
 	"purchase"
 	"history"
 	"infrastructure"
@@ -38,7 +36,9 @@ func main() {
 
 	middlewareAuth := infrastructure.AppHandler(jwtauthorization.ValidateTokenMiddleware).Build()
 
-	m.Handle("/starstore/auth/login", toJson(authLogin.LoginHandler))
+	m.Handle("/starstore/auth/login", negroni.New(
+		infrastructure.AppHandler(authLogin.LoginHandler).BuildResponse(),
+	))
 
 	m.Handle("/starstore/client", negroni.New(
 		infrastructure.AppHandler(clientRepository.StoreClient).BuildResponse(),
@@ -74,18 +74,6 @@ func main() {
 
 	http.ListenAndServe(":8000", n)
 
-}
-
-func HomeHandler(rw http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(rw, "Home")
-}
-
-func toJson(f func(w http.ResponseWriter, r *http.Request) (interface{}, error)) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		response, _ := f(w, r)
-		res1B, _ := json.Marshal(response)
-		fmt.Fprint(w, string(res1B))
-	}
 }
 
 func accessControl(h http.Handler) negroni.Handler {

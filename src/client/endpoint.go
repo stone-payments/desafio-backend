@@ -8,7 +8,6 @@ import (
 	"crypto/sha1"
 	"io"
 	"fmt"
-	"os"
 	"crypto/rand"
 	"bytes"
 )
@@ -17,7 +16,9 @@ func (repository *ClientRepository) StoreClient(r *http.Request) (interface{}, *
 	c := Client{}
 	b, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(b, &c)
-	c.Password = string(protectPassword([]byte(c.Password)))
+	ps, sal := protectPassword([]byte(c.Password))
+	c.Password = string(ps)
+	c.Salt =  string(sal)
 	c.ClientId = NextClientID()
 	p, err := repository.Store(&c)
 
@@ -36,7 +37,6 @@ func generateSalt(secret []byte) []byte {
 
 	if err != nil {
 		fmt.Printf("random read failed: %v", err)
-		os.Exit(1)
 	}
 
 	hash := sha1.New()
@@ -46,7 +46,7 @@ func generateSalt(secret []byte) []byte {
 }
 
 
-func protectPassword(password []byte) []byte{
+func protectPassword(password []byte) ([]byte, []byte){
 	// generate salt from given password
 	salt := generateSalt(password)
 	fmt.Printf("Salt : %x \n", salt)
@@ -57,17 +57,18 @@ func protectPassword(password []byte) []byte{
 	io.WriteString(passwordHash, combination)
 	ph := passwordHash.Sum(nil)
 	fmt.Printf("Password Hash : %x \n", ph)
-	return ph;
+	return ph, salt
 }
 
 
-func IsPassCo(ps []byte, password []byte) bool {
+func IsPassCo(ps []byte, password []byte, salt []byte) bool {
 
-	correctCombination := string(ps) + string(ps)
+	correctCombination := string(salt) + string(ps)
 	correctHash := sha1.New()
 	io.WriteString(correctHash, correctCombination)
 	fmt.Printf("%x \n", correctHash.Sum(nil))
 
-	m := bytes.Equal(correctHash.Sum(nil), password)
+	c:= correctHash.Sum(nil)
+	m := bytes.Equal(c, password)
 	return m
 }
