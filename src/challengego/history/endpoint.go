@@ -2,10 +2,10 @@ package history
 
 import (
 	"net/http"
-	"purchase"
+	"challengego/purchase"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/context"
-	"infrastructure"
+	"challengego/infrastructure"
 )
 
 

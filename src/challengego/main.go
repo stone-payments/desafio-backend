@@ -2,15 +2,15 @@ package main
 
 import (
 	"github.com/gorilla/mux"
-	"gopkg.in/mgo.v2"
-	"product"
-	"jwtauthorization"
 	"github.com/codegangsta/negroni"
+	"gopkg.in/mgo.v2"
+	"challengego/product"
+	"challengego/jwtauthorization"
 	"net/http"
-	"purchase"
-	"history"
-	"infrastructure"
-	"client"
+	"challengego/purchase"
+	"challengego/history"
+	"challengego/infrastructure"
+	"challengego/client"
 )
 
 

@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"time"
-	"infrastructure"
+	"challengego/infrastructure"
 )
 
 func (repository *ProductRepository) GetAllProdutcs(r *http.Request) (interface{}, *infrastructure.AppError){

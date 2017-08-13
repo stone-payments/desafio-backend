@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"github.com/gorilla/context"
-	"infrastructure"
+	"challengego/infrastructure"
 )
 
 func (repository *PurchaseRepository) StorePurchase(r *http.Request) (interface{}, *infrastructure.AppError) {

@@ -4,18 +4,23 @@ import (
 	"net/http"
 	"encoding/json"
 	"io/ioutil"
-	"infrastructure"
+	"challengego/infrastructure"
 	"crypto/sha1"
 	"io"
 	"fmt"
 	"crypto/rand"
 	"bytes"
+	"encoding/hex"
 )
 
 func (repository *ClientRepository) StoreClient(r *http.Request) (interface{}, *infrastructure.AppError) {
 	c := Client{}
 	b, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(b, &c)
+	user, _ := repository.FindByUsername(c.Username)
+	if user != nil {
+		return nil, &infrastructure.AppError{nil, "User already exists", 401}
+	}
 	ps, sal := protectPassword([]byte(c.Password))
 	c.Password = string(ps)
 	c.Salt =  string(sal)
@@ -46,7 +51,7 @@ func generateSalt(secret []byte) []byte {
 }
 
 
-func protectPassword(password []byte) ([]byte, []byte){
+func protectPassword(password []byte) (string, string){
 	// generate salt from given password
 	salt := generateSalt(password)
 	fmt.Printf("Salt : %x \n", salt)
@@ -57,18 +62,20 @@ func protectPassword(password []byte) ([]byte, []byte){
 	io.WriteString(passwordHash, combination)
 	ph := passwordHash.Sum(nil)
 	fmt.Printf("Password Hash : %x \n", ph)
-	return ph, salt
+	return hex.EncodeToString(ph), hex.EncodeToString(salt)
 }
 
 
-func IsPassCo(ps []byte, password []byte, salt []byte) bool {
+func IsPassCo(ps []byte, password string, salt string) bool {
 
-	correctCombination := string(salt) + string(ps)
+	x, _ :=hex.DecodeString(salt)
+	correctCombination := string(x) + string(ps)
 	correctHash := sha1.New()
 	io.WriteString(correctHash, correctCombination)
 	fmt.Printf("%x \n", correctHash.Sum(nil))
 
 	c:= correctHash.Sum(nil)
-	m := bytes.Equal(c, password)
+	passHex, _ := hex.DecodeString(password)
+	m := bytes.Equal(c, passHex)
 	return m
 }

@@ -5,10 +5,10 @@ import (
 	"gopkg.in/mgo.v2/bson"
 	"gopkg.in/mgo.v2"
 	"errors"
-	"purchase"
+	"challengego/purchase"
 	"github.com/pborman/uuid"
-	"memcached"
-	"infrastructure"
+	"challengego/memcached"
+	"challengego/infrastructure"
 )
 
 //History model structure

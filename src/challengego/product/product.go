@@ -6,8 +6,8 @@ import (
 	"gopkg.in/mgo.v2/bson"
 	"gopkg.in/mgo.v2"
 	"errors"
-	"memcached"
-	"infrastructure"
+	"challengego/memcached"
+	"challengego/infrastructure"
 )
 
 type ProductId string

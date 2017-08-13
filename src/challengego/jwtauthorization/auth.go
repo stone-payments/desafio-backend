@@ -8,8 +8,8 @@ import (
 	"time"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
-	"infrastructure"
-	"client"
+	"challengego/infrastructure"
+	"challengego/client"
 )
 
 /* Set up a global string for our secret */
@@ -58,7 +58,7 @@ func (auth *JWTAuth) LoginHandler(r *http.Request) (interface{}, *infrastructure
 		return nil, &infrastructure.AppError{err, "Invalid credentials", 401}
 	}
 
-	if !client.IsPassCo([]byte(user.Password), []byte(u.Password), []byte(u.Salt)){
+	if !client.IsPassCo([]byte(user.Password), u.Password, u.Salt){
 		return nil, &infrastructure.AppError{err, "Invalid credentials", 401}
 	}
 
