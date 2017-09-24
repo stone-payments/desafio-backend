@@ -3,3 +3,5 @@
 ********************************
 **** YOUR CHALLENGE DETAILS ****
 ********************************
+login: admin
+senha: admin
