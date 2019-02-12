@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  app:
+      build: .
+      volumes:
+        - .:/usr/app
+      depends_on:
+        - mongo
+        - redis
+      ports:
+        - 3000:3000
+      command: npm run dev
+  mongo:
+      image: mongo
+      expose:
+        - 27017
+  redis:
+      image: redis:alpine
+      expose:
+        - 6379

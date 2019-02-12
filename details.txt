@@ -3,3 +3,7 @@
 ********************************
 **** YOUR CHALLENGE DETAILS ****
 ********************************
+Necessário a instalação do Docker Compose.
+Executar docker-compose up
+
+As requisições devem ser feitas em localhost:3000
