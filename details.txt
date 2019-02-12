@@ -3,3 +3,22 @@
 ********************************
 **** YOUR CHALLENGE DETAILS ****
 ********************************
+Necessário a instalação do Docker Compose.
+Executar docker-compose up
+
+As requisições devem ser feitas em localhost:3000
+
+Utilize a rota localhost:3000/starstore/auth/register , para obter um token de acesso via post com um JSON, como este por exemplo:
+
+{
+  "name": "Joao",
+  "email": "joao@stone.com.br",
+  "password": "stonegroup100%"
+}
+
+Os tokens expiram em 24h, para obter um novo faça login, na rota localhost:3000/starstore/auth com um JSON:
+
+{
+  "email": "joao@stone.com.br",
+  "password": "stonegroup100%"
+}
