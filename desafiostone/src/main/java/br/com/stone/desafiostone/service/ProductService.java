@@ -13,34 +13,34 @@ import br.com.stone.desafiostone.repository.ProductRepository;
 public class ProductService {
 
     @Autowired
-    private ProductRepository pr;
+    private ProductRepository productRepository;
 
     @Autowired
-    private Response rm;
+    private Response responseMessage;
 
     public Iterable<Product> listar() {
-        return pr.findAll();
+        return productRepository.findAll();
     }
 
-    public ResponseEntity<?> cadastrarAlterar(Product pm, String acao) {
-        if (pm.getTitle().equals("")) {
-            rm.setMensagem("O título do produto é obrigatório");
-            return new ResponseEntity<Response>(rm, HttpStatus.BAD_REQUEST);
-        } else if (pm.getSeller().equals("")) {
-            rm.setMensagem("O vendedor do produto é obrigatório");
-            return new ResponseEntity<Response>(rm, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> cadastrarAlterar(Product product, String acao) {
+        if (product.getTitle().isEmpty()) {
+            responseMessage.setMensagem("O título do produto é obrigatório");
+            return new ResponseEntity<Response>(responseMessage, HttpStatus.BAD_REQUEST);
+        } else if (product.getSeller().isEmpty()) {
+            responseMessage.setMensagem("O vendedor do produto é obrigatório");
+            return new ResponseEntity<Response>(responseMessage, HttpStatus.BAD_REQUEST);
         } else {
             if (acao.equals("cadastrar")) {
-                return new ResponseEntity<Product>(pr.save(pm), HttpStatus.CREATED);
+                return new ResponseEntity<Product>(productRepository.save(product), HttpStatus.CREATED);
             } else {
-                return new ResponseEntity<Product>(pr.save(pm), HttpStatus.OK);
+                return new ResponseEntity<Product>(productRepository.save(product), HttpStatus.OK);
             }
         }
     }
 
     public ResponseEntity<Response> remover(long codigo) {
-        pr.deleteById(codigo);
-        rm.setMensagem("Produto removido com sucesso!!");
-        return new ResponseEntity<Response>(rm, HttpStatus.OK);
+        productRepository.deleteById(codigo);
+        responseMessage.setMensagem("Produto removido com sucesso!!");
+        return new ResponseEntity<Response>(responseMessage, HttpStatus.OK);
     }
 }

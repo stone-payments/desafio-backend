@@ -12,35 +12,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.stone.desafiostone.entity.Product;
 import br.com.stone.desafiostone.entity.Response;
-import br.com.stone.desafiostone.service.ProductService;
+import br.com.stone.desafiostone.entity.Transaction;
+import br.com.stone.desafiostone.service.TransactionService;
 
 @RestController
-@RequestMapping("/starstore/product")
+@RequestMapping("/starstore/buy")
 @CrossOrigin(origins = "*")
-public class ProductController {
+public class TransactionController {
 
     @Autowired
-    ProductService productService;
+    TransactionService transactionService;
 
     @DeleteMapping("/remover/{codigo}")
     public ResponseEntity<Response> remover(@PathVariable long codigo) {
-        return productService.remover(codigo);
+        return transactionService.remover(codigo);
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<?> cadastrar(@RequestBody Product product) {
-        return productService.cadastrarAlterar(product, "cadastrar");
+    public ResponseEntity<?> cadastrar(@RequestBody Transaction transaction) {
+        return transactionService.cadastrarAlterar(transaction, "cadastrar");
     }
 
     @PutMapping("/alterar")
-    public ResponseEntity<?> alterar(@RequestBody Product product) {
-        return productService.cadastrarAlterar(product, "alterar");
+    public ResponseEntity<?> alterar(@RequestBody Transaction transaction) {
+        return transactionService.cadastrarAlterar(transaction, "alterar");
     }
 
     @GetMapping("/listar")
-    public Iterable<Product> listar() {
-        return productService.listar();
+    public Iterable<Transaction> listar() {
+        return transactionService.listar();
     }
 }
