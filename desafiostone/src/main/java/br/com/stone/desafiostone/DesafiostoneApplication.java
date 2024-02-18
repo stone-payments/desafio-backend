@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DesafiostoneApplication {
 
+	
 	public static void main(String[] args) {
 		SpringApplication.run(DesafiostoneApplication.class, args);
 	}
