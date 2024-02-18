@@ -32,15 +32,11 @@ public class TransactionService {
             responseMessage.setMensagem("O Nome do cliente é obrigatório");
             return new ResponseEntity<Response>(responseMessage, HttpStatus.BAD_REQUEST);
         } else {
-            // Verifica se o cartão de crédito associado à transação já está persistido
             if (transaction.getCredit_card() != null && transaction.getCredit_card().getId() == 0) {
-                // Se não estiver persistido, salva o cartão de crédito primeiro
                 CreditCard creditCard = transaction.getCredit_card();
                 CreditCard savedCreditCard = creditCardRepository.save(creditCard);
-                // Associa o cartão de crédito salvo à transação
                 transaction.setCredit_card(savedCreditCard);
             }
-
             if (acao.equals("cadastrar")) {
                 return new ResponseEntity<Transaction>(transactionRepository.save(transaction), HttpStatus.CREATED);
             } else {
