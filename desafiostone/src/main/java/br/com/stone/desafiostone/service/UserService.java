@@ -1,27 +1,39 @@
-import java.util.ArrayList;
+package br.com.stone.desafiostone.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import br.com.stone.desafiostone.entity.Response;
+import br.com.stone.desafiostone.entity.User;
 import br.com.stone.desafiostone.repository.UserRepository;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
 
     @Autowired
-    private final UserRepository userRepository;
+     UserRepository userRepository;
 
-  
+    @Autowired
+    Response response;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
+    public Iterable<User> listar() {
+        return userRepository.findAll();
+    }
+
+    public ResponseEntity<?> cadastrarAlterar(User user, String acao) {
+        if (user.getUsername().isEmpty()) {
+             response.setMensagem("O Nome do cliente é obrigatório");
+        } else if (user.getPassword().isEmpty()) {
+            response.setMensagem("a senha e  obrigatirio ");
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Response> remover(long codigo) {
+        userRepository.deleteById(codigo);
+        response.setMensagem("Transaçao removida com sucesso!!");
+        return ResponseEntity.ok(response);
     }
 }
