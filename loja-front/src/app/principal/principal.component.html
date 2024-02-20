@@ -1,13 +1,13 @@
 <div>
     <form>
-        <input type="number" placeholder="ID" class="form-control" name="id" [(ngModel)]="cliente.id">
-        <input type="text" placeholder="Título" class="form-control" name="title" [(ngModel)]="cliente.title">
-        <input type="number" placeholder="Preço" class="form-control" name="price" [(ngModel)]="cliente.price">
-        <input type="text" placeholder="CEP" class="form-control" name="zipcode" [(ngModel)]="cliente.zipcode">
-        <input type="text" placeholder="Vendedor" class="form-control" name="seller" [(ngModel)]="cliente.seller">
+        <input type="number" placeholder="ID" class="form-control" name="id" [(ngModel)]="product.id">
+        <input type="text" placeholder="Título" class="form-control" name="title" [(ngModel)]="product.title">
+        <input type="number" placeholder="Preço" class="form-control" name="price" [(ngModel)]="product.price">
+        <input type="text" placeholder="CEP" class="form-control" name="zipcode" [(ngModel)]="product.zipcode">
+        <input type="text" placeholder="Vendedor" class="form-control" name="seller" [(ngModel)]="product.seller">
         <input type="text" placeholder="Thumbnail HD" class="form-control" name="thumbnailHd"
-            [(ngModel)]="cliente.thumbnailHd">
-        <input type="text" placeholder="Data" class="form-control" name="date" [(ngModel)]="cliente.date">
+            [(ngModel)]="product.thumbnailHd">
+        <input type="text" placeholder="Data" class="form-control" name="date" [(ngModel)]="product.date">
 
         <input type="button" value="Cadastrar" *ngIf="btnCadastro" class="btn btn-primary" (click)="cadastrar()">
         <input type="button" value="Alterar" *ngIf="!btnCadastro" class="btn btn-warning" (click)="editar()">
@@ -31,7 +31,7 @@
     </thead>
 
     <tbody>
-        <tr *ngFor="let c of clientes; index as i">
+        <tr *ngFor="let c of products; index as i">
             <td>{{i+1}}</td>
             <td>{{c.title}}</td>
             <td>{{c.price}}</td>
@@ -41,7 +41,7 @@
                 <img [src]="c.thumbnailHd" alt="Imagem do Produto" style="max-width: 100px; max-height: 100px;">
             </td>
             <td>{{c.date}}</td>
-            <td><button class="btn btn-success" (click)="selecionarCliente(i)">Selecionar</button></td>
+            <td><button class="btn btn-success" (click)="selecionarProduct(i)">Selecionar</button></td>
         </tr>
     </tbody>
 </table>

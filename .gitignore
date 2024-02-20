@@ -38,3 +38,5 @@ build/
 
 # Ignored node_modules directory
 node_modules
+
+.angular
