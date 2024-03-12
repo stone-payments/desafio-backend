@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('zipcode');
             $table->string('seller');
             $table->string('thumbnailHd');
-            $table->date('date')->format('d/m/Y');
+            $table->date('date');
             $table->timestamps();
         });
     }
