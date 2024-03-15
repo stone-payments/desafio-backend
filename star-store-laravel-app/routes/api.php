@@ -24,12 +24,11 @@ Route::prefix('starstore')->group(function (){
     });
 
     Route::prefix('buy')->group(function (){
-        Route::post('/', [ProductController::class, 'buy']);
+       Route::post('/', [TransactionController::class, 'store']);
     });
 
-    Route::prefix('transactions')->group(function (){
+    Route::prefix('history')->group(function (){
         Route::get('/', [TransactionController::class, 'index']);
-        Route::get('/{id}', [TransactionController::class, 'show']);
-        Route::post('/', [TransactionController::class, 'store']);
+        Route::get('/{id}', [TransactionController::class, 'showByUser']);
     });
 });

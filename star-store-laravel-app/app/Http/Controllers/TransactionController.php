@@ -13,7 +13,18 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        return Transaction::all();
+        $transactions = Transaction::all();
+        $response = $transactions->map(function ($transaction) {
+            return [
+                'client_id' => $transaction->user_id,
+                'purchase_id' => $transaction->id,
+                'value' => $transaction->total_to_pay,
+                'date' => $transaction->created_at->format('d/m/Y'),
+                'card_number' => '**** **** **** ' . $transaction->creditCard->card_number
+            ];
+        });
+
+        return response()->json($response, 200);
     }
 
     public function show(string $id)
@@ -24,9 +35,29 @@ class TransactionController extends Controller
             return response()->json(['message' => 'Transaction not found'], 404);
         }
 
-        return $transaction;
+        return response()->json(['data' => $transaction], 200);
     }
 
+    public function showByUser(string $id)
+    {
+        $transactions = Transaction::where('user_id', $id)->get();
+
+        if ($transactions->isEmpty()) {
+            return response()->json(['message' => 'Transactions not found'], 404);
+        }
+
+        $response = $transactions->map(function ($transaction) {
+            return [
+                'client_id' => $transaction->user_id,
+                'purchase_id' => $transaction->id,
+                'value' => $transaction->total_to_pay,
+                'date' => $transaction->created_at->format('d/m/Y'),
+                'card_number' => '**** **** **** ' . $transaction->creditCard->card_number
+            ];
+        });
+
+        return response()->json($response, 200);
+    }
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -78,7 +109,14 @@ class TransactionController extends Controller
             ]
         );
 
-        return response()->json($transaction, 201);
+        $response = [
+            'client_id' => $transaction->user_id,
+            'purchase_id' => $transaction->id,
+            'value' => $transaction->total_to_pay,
+            'date' => $transaction->created_at->format('d/m/Y'),
+            'card_number' => '**** **** **** ' . $creditCard->card_number
+        ];
 
+        return response()->json($response, 201);
     }
 }
