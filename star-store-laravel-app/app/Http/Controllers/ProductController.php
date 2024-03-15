@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\product\StoreProductRequest;
+use App\Http\Requests\product\UpdateProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Carbon\Carbon;
@@ -25,21 +27,10 @@ class ProductController extends Controller
         return response()->json(['product' => $product], 200);
     }
 
-    function store(Request $request)
+    function store(StoreProductRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|min:1',
-            'price' => 'required|integer|min:1',
-            'zipcode' => 'required|string',
-            'seller' => 'required|string',
-            'thumbnailHd' => 'required|string',
-            'date' => 'required|date_format:d/m/Y'
-        ]);
+        $validated = $request->validated();
 
-        if ($validator->fails())
-            return response()->json(['message' => $validator->errors()], 422);
-
-        $validated = $validator->validated();
         // formatting to save in the database
         $validated['date'] = Carbon::createFromFormat('d/m/Y', $validated['date'])->format('Y-m-d');
 
@@ -48,25 +39,14 @@ class ProductController extends Controller
         return response()->json(['message' => 'Product created', 'product' => $product], 201);
     }
 
-    function update(Request $request, $id)
+    function update(UpdateProductRequest $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'nullable|string|min:1',
-            'price' => 'nullable|integer|min:1',
-            'zipcode' => 'nullable|string',
-            'seller' => 'nullable|string',
-            'thumbnailHd' => 'nullable|string',
-            'date' => 'nullable|date_format:d/m/Y'
-        ]);
-
-        if ($validator->fails())
-            return response()->json(['message' => $validator->errors()], 422);
+        $validated = $request->validated();
 
         $product = Product::find($id);
         if (!$product)
             return response()->json(['message' => 'Product not found'], 404);
 
-        $validated = $validator->validated();
         // formatting to save in the database
         $validated['date'] = Carbon::createFromFormat('d/m/Y', $validated['date'])->format('Y-m-d');
 

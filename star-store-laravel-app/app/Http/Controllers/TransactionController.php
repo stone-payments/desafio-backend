@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\transaction\StoreTransactionRequest;
 use App\Models\CreditCard;
 use App\Models\Transaction;
 use App\Models\User;
@@ -58,24 +59,9 @@ class TransactionController extends Controller
 
         return response()->json($response, 200);
     }
-    public function store(Request $request)
+    public function store(StoreTransactionRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'client_id' => 'required|uuid|exists:users,id',
-            'client_name' => 'required|string',
-            'total_to_pay' => 'required|numeric|min:0',
-            'credit_card.card_number' => 'required|numeric|digits:16',
-            'credit_card.value' => 'required|numeric|min:0',
-            'credit_card.cvv' => 'required|numeric|digits:3',
-            'credit_card.card_holder_name' => 'required|string',
-            'credit_card.exp_date' => 'required|date_format:m/y'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
-        $validated = $validator->validated();
+        $validated = $request->validated();
 
         $client = User::find($validated['client_id']);
 
