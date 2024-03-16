@@ -6,29 +6,36 @@ use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     });
 });
 
-Route::prefix('starstore')->group(function (){
-    Route::prefix('products')->group(function (){
-        Route::get('/', [ProductController::class, 'index']);
-        Route::get('/{id}', [ProductController::class, 'show']);
-        Route::post('/', [ProductController::class, 'store']);
-        Route::match(['put', 'patch'], '/{id}', [ProductController::class, 'update']);
-        Route::delete('/{id}', [ProductController::class, 'destroy']);
+Route::prefix('starstore')->group(function () {
+    Route::prefix('products')->group(function () {
+
+        Route::get('/', [ProductController::class, 'index'])->name('get.products');
+
+        Route::get('/{id}', [ProductController::class, 'show'])->name('get.product');
+
+        Route::post('/', [ProductController::class, 'store'])->name('create.product');
+
+        Route::match(['put', 'patch'], '/{id}', [ProductController::class, 'update'])->name('update.product');
+
+        Route::delete('/{id}', [ProductController::class, 'destroy'])->name('delete.product');
     });
 
-    Route::prefix('buy')->group(function (){
-       Route::post('/', [TransactionController::class, 'store']);
+    Route::prefix('buy')->group(function () {
+        Route::post('/', [TransactionController::class, 'store'])->name('buy.product');
     });
 
-    Route::prefix('history')->group(function (){
-        Route::get('/', [TransactionController::class, 'index']);
-        Route::get('/{id}', [TransactionController::class, 'showByUser']);
+    Route::prefix('history')->group(function () {
+        Route::get('/', [TransactionController::class, 'index'])->name('get.history');
+
+        Route::get('/{id}', [TransactionController::class, 'showByUser'])->name('get.history.by.user');
     });
 });
