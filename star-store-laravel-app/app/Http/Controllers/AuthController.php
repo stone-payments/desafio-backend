@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\auth\AuthLoginRequest;
 use App\Http\Requests\auth\AuthRegisterRequest;
-use App\Http\Requests\AuthRequest;
+use App\Http\Resources\auth\AuthLoginResource;
+use App\Http\Resources\auth\AuthLogoutResource;
+use App\Http\Resources\auth\AuthRegisterResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -18,7 +20,7 @@ class AuthController extends Controller
 
         $user = User::create($validated);
 
-        return response()->json([$user], 201);
+        return AuthRegisterResource::make($user)->response()->setStatusCode(201);
     }
 
     function login(AuthLoginRequest $request)
@@ -30,18 +32,13 @@ class AuthController extends Controller
         if (!$user || !Hash::check($validated['password'], $user->password))
             return response()->json(['message' => 'Invalid credentials'], 401);
 
-        return response()->json(
-            [
-                'user' => $user,
-                'token' => $user->createToken('auth_token')->plainTextToken
-            ],
-            200
-        );
+        return AuthLoginResource::make($user)->response()->setStatusCode(200);
     }
 
     function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-        return response()->json(['message' => 'Logged out'], 200);
+        $user = $request->user();
+        $user->currentAccessToken()->delete();
+        return AuthLogoutResource::make($user)->response()->setStatusCode(200);
     }
 }
