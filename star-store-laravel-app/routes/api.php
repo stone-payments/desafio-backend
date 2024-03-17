@@ -36,6 +36,6 @@ Route::prefix('starstore')->group(function () {
     Route::prefix('history')->group(function () {
         Route::get('/', [TransactionController::class, 'index'])->name('get.history');
 
-        Route::get('/{id}', [TransactionController::class, 'showByUser'])->name('get.history.by.user');
+        Route::get('/{id}', [TransactionController::class, 'showUserTransactions'])->name('show.user.history');
     });
 });

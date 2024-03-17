@@ -4,18 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\product\StoreProductRequest;
 use App\Http\Requests\product\UpdateProductRequest;
-use Illuminate\Http\Request;
+use App\Http\Resources\ErrorResource;
+use App\Http\Resources\product\DeletedProductResource;
+use App\Http\Resources\product\DeletedResource;
+use App\Http\Resources\product\IndexProductResource;
+use App\Http\Resources\product\IndexProductResourceCollection;
+use App\Http\Resources\product\StoreProductResource;
+use App\Http\Resources\product\UpdateProductResource;
 use App\Models\Product;
 use Carbon\Carbon;
-use Illuminate\Auth\Events\Validated;
-use Illuminate\Support\Facades\Validator;
-use Spatie\FlareClient\Http\Exceptions\NotFound;
 
 class ProductController extends Controller
 {
     function index()
     {
-        return Product::all();
+        $users = Product::all();
+        return new IndexProductResourceCollection($users);
     }
 
     function show($id)
@@ -23,8 +27,8 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if (!$product)
-            return response()->json(['message' => 'Product not found'], 404);
-        return response()->json(['product' => $product], 200);
+            return ErrorResource::make(['message' => 'Product not found', 'statusCode' => 404]);
+        return IndexProductResource::make($product);
     }
 
     function store(StoreProductRequest $request)
@@ -36,7 +40,7 @@ class ProductController extends Controller
 
         $product = Product::create($validated);
 
-        return response()->json(['message' => 'Product created', 'product' => $product], 201);
+        return StoreProductResource::make($product);
     }
 
     function update(UpdateProductRequest $request, $id)
@@ -45,23 +49,23 @@ class ProductController extends Controller
 
         $product = Product::find($id);
         if (!$product)
-            return response()->json(['message' => 'Product not found'], 404);
+            return ErrorResource::make(['message' => 'Product not found', 'statusCode' => 404]);
 
         // formatting to save in the database
         $validated['date'] = Carbon::createFromFormat('d/m/Y', $validated['date'])->format('Y-m-d');
 
         $product->update($validated);
 
-        return response()->json(['message' => 'Product updated', 'product' => $product], 200);
+        return UpdateProductResource::make($product);
     }
 
     function destroy($id)
     {
         $product = Product::find($id);
         if (!$product)
-            return response()->json(['message' => 'Product not found'], 404);
+            return ErrorResource::make(['message' => 'Product not found', 'statusCode' => 404]);
 
         $product->delete();
-        return response()->json(['message' => 'Product deleted'], 204);
+        return DeletedProductResource::make($product);
     }
 }

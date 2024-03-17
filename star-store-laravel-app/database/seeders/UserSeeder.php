@@ -12,7 +12,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory()->create([
+        \App\Models\User::factory()->hasTransactions()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => bcrypt('password'),

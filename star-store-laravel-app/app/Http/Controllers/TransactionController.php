@@ -3,29 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\transaction\StoreTransactionRequest;
+use App\Http\Resources\ErrorResource;
+use App\Http\Resources\transaction\IndexTransactionResource;
+use App\Http\Resources\transaction\IndexTransactionResourceCollection;
+use App\Http\Resources\transaction\StoreTransactionResource;
 use App\Models\CreditCard;
 use App\Models\Transaction;
 use App\Models\User;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
+
 
 class TransactionController extends Controller
 {
     public function index()
     {
         $transactions = Transaction::all();
-        $response = $transactions->map(function ($transaction) {
-            return [
-                'client_id' => $transaction->user_id,
-                'purchase_id' => $transaction->id,
-                'value' => $transaction->total_to_pay,
-                'date' => $transaction->created_at->format('d/m/Y'),
-                'card_number' => '**** **** **** ' . $transaction->creditCard->card_number
-            ];
-        });
-
-        return response()->json($response, 200);
+        return new IndexTransactionResourceCollection($transactions);
     }
 
     public function show(string $id)
@@ -33,32 +27,23 @@ class TransactionController extends Controller
         $transaction = Transaction::find($id);
 
         if (!$transaction) {
-            return response()->json(['message' => 'Transaction not found'], 404);
+            return new ErrorResource(['message' => 'Transaction not found', 'statusCode' => 404]);
         }
 
-        return response()->json(['data' => $transaction], 200);
+        return IndexTransactionResource::make($transaction);
     }
 
-    public function showByUser(string $id)
+    public function showUserTransactions(string $id)
     {
         $transactions = Transaction::where('user_id', $id)->get();
 
         if ($transactions->isEmpty()) {
-            return response()->json(['message' => 'Transactions not found'], 404);
+            return new ErrorResource(['message' => 'User has no transactions', 'statusCode' => 404]);
         }
 
-        $response = $transactions->map(function ($transaction) {
-            return [
-                'client_id' => $transaction->user_id,
-                'purchase_id' => $transaction->id,
-                'value' => $transaction->total_to_pay,
-                'date' => $transaction->created_at->format('d/m/Y'),
-                'card_number' => '**** **** **** ' . $transaction->creditCard->card_number
-            ];
-        });
-
-        return response()->json($response, 200);
+        return new IndexTransactionResourceCollection($transactions);
     }
+
     public function store(StoreTransactionRequest $request)
     {
         $validated = $request->validated();
@@ -66,7 +51,7 @@ class TransactionController extends Controller
         $client = User::find($validated['client_id']);
 
         if (!$client)
-            return response()->json(['message' => 'Client not found'], 404);
+            return new ErrorResource(['message' => 'Client not found', 'statusCode' => 404]);
 
         $creditCard = DB::table('credit_cards')
             ->where('card_number', substr($validated['credit_card']['card_number'], -4))
@@ -95,14 +80,6 @@ class TransactionController extends Controller
             ]
         );
 
-        $response = [
-            'client_id' => $transaction->user_id,
-            'purchase_id' => $transaction->id,
-            'value' => $transaction->total_to_pay,
-            'date' => $transaction->created_at->format('d/m/Y'),
-            'card_number' => '**** **** **** ' . $creditCard->card_number
-        ];
-
-        return response()->json($response, 201);
+        return new StoreTransactionResource($transaction);
     }
 }
