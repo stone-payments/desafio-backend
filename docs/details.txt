@@ -1,0 +1,37 @@
+********************************
+******   STONE  PAYMENTS  ******
+********************************
+**** YOUR CHALLENGE DETAILS ****
+********************************
+
+Tecnologias:
+- PHP
+- Laravel
+- PostgreSQL
+- Redis
+
+Pre Requisitos:
+- Docker Engine
+- Docker Compose
+
+Como rodar:
+
+1. entrar na pasta do projeto
+cd star-store-laravel-app
+
+2. subir containers
+./vendor/bin/sail up -d
+
+3. criar uma nova chave para a aplicação
+./vendor/bin/sail artisan key:generate
+
+4. instalar depedencias
+./vendor/bin/sail composer install
+
+5. criar as migrações para o banco de dados
+./vendor/bin/sail artisan migrate
+
+se quiser popular seu banco de dados execute:
+./vendor/bin/sail artisan migrate --seed
+
+7. fazer as requisições para http://localhost:8989/api

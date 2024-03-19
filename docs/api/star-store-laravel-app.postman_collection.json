@@ -1,0 +1,1458 @@
+{
+	"info": {
+		"_postman_id": "ea26bd77-5e26-4439-93b9-3b5ac23d100e",
+		"name": "star-store-laravel-app",
+		"description": "requisições da api do desafio backend stone\n\nrepositorio: [https://github.com/pdr-tuche/desafio-backend-stone](https://github.com/pdr-tuche/desafio-backend-stone)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22309579"
+	},
+	"item": [
+		{
+			"name": "User Requests",
+			"item": [
+				{
+					"name": "User Register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"yourname\",\n    \"email\": \"yourname@example.com\",\n    \"email_confirmation\": \"yourname@example.com\",\n    \"password\": \"yourpassword\",\n    \"password_confirmation\": \"yourpassword\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_laravel_app}}/api/auth/register",
+							"host": [
+								"{{base_url_laravel_app}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "User Register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"yourname\",\n    \"email\": \"yourname@example.com\",\n    \"email_confirmation\": \"yourname@example.com\",\n    \"password\": \"yourpassword\",\n    \"password_confirmation\": \"yourpassword\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8989/api/auth/register",
+									"host": [
+										"localhost"
+									],
+									"port": "8989",
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8989"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.3-1+ubuntu22.04.1+deb.sury.org+1"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Mar 2024 01:20:35 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User registered successfully\",\n    \"user\": {\n        \"name\": \"yourname\",\n        \"email\": \"yourname@example.com\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@example.com\",\n    \"password\":\"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_laravel_app}}/api/auth/login",
+							"host": [
+								"{{base_url_laravel_app}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "User Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"yourname@example.com\",\n    \"password\":\"yourpassword\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8989/api/auth/login",
+									"host": [
+										"localhost"
+									],
+									"port": "8989",
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8989"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.3-1+ubuntu22.04.1+deb.sury.org+1"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Mar 2024 01:21:06 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Logged in successfully\",\n    \"user\": {\n        \"name\": \"yourname\",\n        \"email\": \"yourname@example.com\",\n        \"token\": \"1|1kjIrN3cDnsSCnH4RCiKQEgNDgEIYRbEBqaswlMBa737b356\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "User Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|5ETdzzvU7RYdi7ActwVH8g3EEEr8OmcN84nTWzQBee971787",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 5|MElgT9DTIUmcFc84FF6nVzWjT6yRMv8Ay5zKEjt6d17f8536",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url_laravel_app}}/api/auth/logout",
+							"host": [
+								"{{base_url_laravel_app}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "User Logout",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer 5|MElgT9DTIUmcFc84FF6nVzWjT6yRMv8Ay5zKEjt6d17f8536",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:8989/api/auth/logout",
+									"host": [
+										"localhost"
+									],
+									"port": "8989",
+									"path": [
+										"api",
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8989"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.3-1+ubuntu22.04.1+deb.sury.org+1"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Mar 2024 01:26:43 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User logged out successfully\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Star Store Requests",
+			"item": [
+				{
+					"name": "products",
+					"item": [
+						{
+							"name": "Get All Products",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url_laravel_app}}/api/starstore/products/",
+									"host": [
+										"{{base_url_laravel_app}}"
+									],
+									"path": [
+										"api",
+										"starstore",
+										"products",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get All Products",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:8989/api/starstore/products/",
+											"host": [
+												"localhost"
+											],
+											"port": "8989",
+											"path": [
+												"api",
+												"starstore",
+												"products",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "localhost:8989"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.3.3-1+ubuntu22.04.1+deb.sury.org+1"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 19 Mar 2024 01:35:23 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "59"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"title\": \"Ex ea laborum.\",\n        \"price\": 605,\n        \"zipcode\": \"19652-8918\",\n        \"seller\": \"Rickey Ward V\",\n        \"thumbnailHd\": \"https://via.placeholder.com/640x480.png/00bbdd?text=cats+illum\",\n        \"date\": \"23/05/2012\"\n    },\n    {\n        \"title\": \"Aut id.\",\n        \"price\": 299,\n        \"zipcode\": \"06042\",\n        \"seller\": \"Ewell VonRueden\",\n        \"thumbnailHd\": \"https://via.placeholder.com/640x480.png/0044cc?text=cats+quas\",\n        \"date\": \"08/06/1974\"\n    },\n    {\n        \"title\": \"Voluptas fugit laudantium molestiae.\",\n        \"price\": 327,\n        \"zipcode\": \"35460\",\n        \"seller\": \"Dr. Zora Monahan\",\n        \"thumbnailHd\": \"https://via.placeholder.com/640x480.png/005555?text=cats+sint\",\n        \"date\": \"11/12/2019\"\n    },\n    {\n        \"title\": \"Porro officiis autem necessitatibus.\",\n        \"price\": 714,\n        \"zipcode\": \"95404\",\n        \"seller\": \"Celestino Halvorson\",\n        \"thumbnailHd\": \"https://via.placeholder.com/640x480.png/0033ff?text=cats+nostrum\",\n        \"date\": \"01/12/2018\"\n    },\n    {\n        \"title\": \"Repudiandae voluptatem in.\",\n        \"price\": 466,\n        \"zipcode\": \"06954-1715\",\n        \"seller\": \"Wilmer Berge\",\n        \"thumbnailHd\": \"https://via.placeholder.com/640x480.png/006655?text=cats+numquam\",\n        \"date\": \"28/11/2013\"\n    },\n    {\n        \"title\": \"Et deleniti mollitia.\",\n        \"price\": 227,\n        \"zipcode\": \"19016\",\n        \"seller\": \"Eliseo Boehm I\",\n        \"thumbnailHd\": \"https://via.placeholder.com/640x480.png/00aabb?text=cats+consectetur\",\n        \"date\": \"15/03/1984\"\n    },\n    {\n        \"title\": \"Qui nostrum consequatur facere minima.\",\n        \"price\": 250,\n        \"zipcode\": \"93693-5770\",\n        \"seller\": \"Elmer Ziemann\",\n        \"thumbnailHd\": \"https://via.placeholder.com/640x480.png/00bbdd?text=cats+voluptas\",\n        \"date\": \"19/12/1971\"\n    },\n    {\n        \"title\": \"Dolorum placeat corrupti atque.\",\n        \"price\": 103,\n        \"zipcode\": \"64589-2541\",\n        \"seller\": \"Dr. Rosalyn Corkery\",\n        \"thumbnailHd\": \"https://via.placeholder.com/640x480.png/0044cc?text=cats+sunt\",\n        \"date\": \"12/05/1980\"\n    },\n    {\n        \"title\": \"In ut assumenda error.\",\n        \"price\": 419,\n        \"zipcode\": \"37838-9730\",\n        \"seller\": \"Opal Parker\",\n        \"thumbnailHd\": \"https://via.placeholder.com/640x480.png/00ccee?text=cats+dolor\",\n        \"date\": \"22/08/1976\"\n    },\n    {\n        \"title\": \"Accusantium voluptas dolorem.\",\n        \"price\": 166,\n        \"zipcode\": \"98514-3834\",\n        \"seller\": \"Denis Huel\",\n        \"thumbnailHd\": \"https://via.placeholder.com/640x480.png/0088ff?text=cats+ducimus\",\n        \"date\": \"26/09/1989\"\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "Get Product By Id",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url_laravel_app}}/api/starstore/products/:id",
+									"host": [
+										"{{base_url_laravel_app}}"
+									],
+									"path": [
+										"api",
+										"starstore",
+										"products",
+										":id"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get Product By Id",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:8989/api/starstore/products/:id",
+											"host": [
+												"localhost"
+											],
+											"port": "8989",
+											"path": [
+												"api",
+												"starstore",
+												"products",
+												":id"
+											],
+											"query": [
+												{
+													"key": "",
+													"value": null,
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "localhost:8989"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.3.3-1+ubuntu22.04.1+deb.sury.org+1"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 19 Mar 2024 01:35:55 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "58"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"title\": \"Ex ea laborum.\",\n    \"price\": 605,\n    \"zipcode\": \"19652-8918\",\n    \"seller\": \"Rickey Ward V\",\n    \"thumbnailHd\": \"https://via.placeholder.com/640x480.png/00bbdd?text=cats+illum\",\n    \"date\": \"23/05/2012\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Post Product",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Blusa do Imperio\",\n    \"price\": 7990,\n    \"zipcode\": \"78993-000\",\n    \"seller\": \"João da Silva\",\n    \"thumbnailHd\": \"https://cdn.awsli.com.br/600x450/21/21351/produto/3853007/f66e8c63ab.jpg\",\n    \"date\": \"26/11/2015\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url_laravel_app}}/api/starstore/products/",
+									"host": [
+										"{{base_url_laravel_app}}"
+									],
+									"path": [
+										"api",
+										"starstore",
+										"products",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Post Product",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"Blusa do Imperio\",\n    \"price\": 7990,\n    \"zipcode\": \"78993-000\",\n    \"seller\": \"João da Silva\",\n    \"thumbnailHd\": \"https://cdn.awsli.com.br/600x450/21/21351/produto/3853007/f66e8c63ab.jpg\",\n    \"date\": \"26/11/2015\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8989/api/starstore/products/",
+											"host": [
+												"localhost"
+											],
+											"port": "8989",
+											"path": [
+												"api",
+												"starstore",
+												"products",
+												""
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "localhost:8989"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.3.3-1+ubuntu22.04.1+deb.sury.org+1"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 19 Mar 2024 01:36:10 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "57"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product created\",\n    \"product\": {\n        \"id\": 11,\n        \"title\": \"Blusa do Imperio\",\n        \"price\": 7990,\n        \"zipcode\": \"78993-000\",\n        \"seller\": \"João da Silva\",\n        \"thumbnailHd\": \"https://cdn.awsli.com.br/600x450/21/21351/produto/3853007/f66e8c63ab.jpg\",\n        \"date\": \"26/11/2015\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Product",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"zipcode\": \"78993-000\",\n    \"seller\": \"João Silv aa\",\n    \"date\": \"12/12/2015\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url_laravel_app}}/api/starstore/products/:id",
+									"host": [
+										"{{base_url_laravel_app}}"
+									],
+									"path": [
+										"api",
+										"starstore",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Update Product",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"zipcode\": \"78993-000\",\n    \"seller\": \"João Silv aa\",\n    \"date\": \"12/12/2015\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8989/api/starstore/products/:id",
+											"host": [
+												"localhost"
+											],
+											"port": "8989",
+											"path": [
+												"api",
+												"starstore",
+												"products",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "localhost:8989"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.3.3-1+ubuntu22.04.1+deb.sury.org+1"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 19 Mar 2024 01:37:06 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "59"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product updated\",\n    \"product\": {\n        \"id\": 1,\n        \"title\": \"Ex ea laborum.\",\n        \"price\": 605,\n        \"zipcode\": \"78993-000\",\n        \"seller\": \"João Silv aa\",\n        \"thumbnailHd\": \"https://via.placeholder.com/640x480.png/00bbdd?text=cats+illum\",\n        \"date\": \"12/12/2015\",\n        \"created_at\": \"2024-03-19T01:31:47.000000Z\",\n        \"updated_at\": \"2024-03-19T01:37:06.000000Z\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Product Copy",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"price\": 911,\n    \"seller\": \"João Silva junior\",\n    \"date\": \"26/11/2016\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url_laravel_app}}/api/starstore/products/:id",
+									"host": [
+										"{{base_url_laravel_app}}"
+									],
+									"path": [
+										"api",
+										"starstore",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Update Product Copy",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"price\": 911,\n    \"seller\": \"João Silva junior\",\n    \"date\": \"26/11/2016\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8989/api/starstore/products/:id",
+											"host": [
+												"localhost"
+											],
+											"port": "8989",
+											"path": [
+												"api",
+												"starstore",
+												"products",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "localhost:8989"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.3.3-1+ubuntu22.04.1+deb.sury.org+1"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 19 Mar 2024 01:38:02 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "57"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Product updated\",\n    \"product\": {\n        \"id\": 1,\n        \"title\": \"Ex ea laborum.\",\n        \"price\": 911,\n        \"zipcode\": \"78993-000\",\n        \"seller\": \"João Silva junior\",\n        \"thumbnailHd\": \"https://via.placeholder.com/640x480.png/00bbdd?text=cats+illum\",\n        \"date\": \"26/11/2016\",\n        \"created_at\": \"2024-03-19T01:31:47.000000Z\",\n        \"updated_at\": \"2024-03-19T01:37:42.000000Z\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Product",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url_laravel_app}}/api/starstore/products/:id",
+									"host": [
+										"{{base_url_laravel_app}}"
+									],
+									"path": [
+										"api",
+										"starstore",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Delete Product",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:8989/api/starstore/products/:id",
+											"host": [
+												"localhost"
+											],
+											"port": "8989",
+											"path": [
+												"api",
+												"starstore",
+												"products",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "Host",
+											"value": "localhost:8989"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.3.3-1+ubuntu22.04.1+deb.sury.org+1"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 19 Mar 2024 01:38:23 GMT"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "59"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": null
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "buy",
+					"item": [
+						{
+							"name": "Buy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "1|K8k0IZHVHonwik8JFRYRtixOVjBYQwGiWrViFTfr36d10b73",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+										"key": "Authorization",
+										"value": "Bearer 1|K8k0IZHVHonwik8JFRYRtixOVjBYQwGiWrViFTfr36d10b73",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"client_id\": \"9757f84d-3c57-35da-99a0-1f00c63f9959\",\n    \"client_name\": \"Test User\",\n    \"total_to_pay\": 1236,\n    \"credit_card\": {\n        \"card_number\": \"1234123412341234\",\n        \"value\": 7990,\n        \"cvv\": 789,\n        \"card_holder_name\": \"Luke Skywalker\",\n        \"exp_date\": \"12/24\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url_laravel_app}}/api/starstore/buy/",
+									"host": [
+										"{{base_url_laravel_app}}"
+									],
+									"path": [
+										"api",
+										"starstore",
+										"buy",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Buy",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+												"key": "Authorization",
+												"value": "Bearer 1|K8k0IZHVHonwik8JFRYRtixOVjBYQwGiWrViFTfr36d10b73",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"client_id\": \"9757f84d-3c57-35da-99a0-1f00c63f9959\",\n    \"client_name\": \"Test User\",\n    \"total_to_pay\": 1236,\n    \"credit_card\": {\n        \"card_number\": \"1234123412341234\",\n        \"value\": 7990,\n        \"cvv\": 789,\n        \"card_holder_name\": \"Luke Skywalker\",\n        \"exp_date\": \"12/24\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8989/api/starstore/buy/",
+											"host": [
+												"localhost"
+											],
+											"port": "8989",
+											"path": [
+												"api",
+												"starstore",
+												"buy",
+												""
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "localhost:8989"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.3.3-1+ubuntu22.04.1+deb.sury.org+1"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 19 Mar 2024 01:42:07 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "59"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Transaction completed successfully\",\n    \"transaction\": {\n        \"purchase_id\": \"9b98f54b-817b-416c-a028-0ece129aa0a5\",\n        \"client_id\": \"9757f84d-3c57-35da-99a0-1f00c63f9959\",\n        \"value\": 1236,\n        \"date\": \"19/03/2024\",\n        \"card_number\": \"**** **** **** 1234\"\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "history",
+					"item": [
+						{
+							"name": "Get Client Transaction History",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "1|K8k0IZHVHonwik8JFRYRtixOVjBYQwGiWrViFTfr36d10b73",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer 1|K8k0IZHVHonwik8JFRYRtixOVjBYQwGiWrViFTfr36d10b73",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base_url_laravel_app}}/api/starstore/history/:id",
+									"host": [
+										"{{base_url_laravel_app}}"
+									],
+									"path": [
+										"api",
+										"starstore",
+										"history",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "9757f84d-3c57-35da-99a0-1f00c63f9959"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get Client Transaction History",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer 1|K8k0IZHVHonwik8JFRYRtixOVjBYQwGiWrViFTfr36d10b73",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "localhost:8989/api/starstore/history/:id",
+											"host": [
+												"localhost"
+											],
+											"port": "8989",
+											"path": [
+												"api",
+												"starstore",
+												"history",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "9757f84d-3c57-35da-99a0-1f00c63f9959"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "localhost:8989"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.3.3-1+ubuntu22.04.1+deb.sury.org+1"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 19 Mar 2024 01:44:46 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "59"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"client_id\": \"9757f84d-3c57-35da-99a0-1f00c63f9959\",\n        \"purchase_id\": \"2aa230ce-4896-3969-907d-a8f33ef1cdf7\",\n        \"value\": 8220,\n        \"date\": \"19/03/2024\",\n        \"card_number\": \"**** **** **** 8561\"\n    },\n    {\n        \"client_id\": \"9757f84d-3c57-35da-99a0-1f00c63f9959\",\n        \"purchase_id\": \"9b98f54b-817b-416c-a028-0ece129aa0a5\",\n        \"value\": 1236,\n        \"date\": \"19/03/2024\",\n        \"card_number\": \"**** **** **** 1234\"\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "Get Transaction History",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "1|K8k0IZHVHonwik8JFRYRtixOVjBYQwGiWrViFTfr36d10b73",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer 1|K8k0IZHVHonwik8JFRYRtixOVjBYQwGiWrViFTfr36d10b73",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base_url_laravel_app}}/api/starstore/history/",
+									"host": [
+										"{{base_url_laravel_app}}"
+									],
+									"path": [
+										"api",
+										"starstore",
+										"history",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get Transaction History",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer 1|K8k0IZHVHonwik8JFRYRtixOVjBYQwGiWrViFTfr36d10b73",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "localhost:8989/api/starstore/history/",
+											"host": [
+												"localhost"
+											],
+											"port": "8989",
+											"path": [
+												"api",
+												"starstore",
+												"history",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "localhost:8989"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.3.3-1+ubuntu22.04.1+deb.sury.org+1"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 19 Mar 2024 01:46:18 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "59"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"client_id\": \"9757f84d-3c57-35da-99a0-1f00c63f9959\",\n        \"purchase_id\": \"2aa230ce-4896-3969-907d-a8f33ef1cdf7\",\n        \"value\": 8220,\n        \"date\": \"19/03/2024\",\n        \"card_number\": \"**** **** **** 8561\"\n    },\n    {\n        \"client_id\": \"92019ea5-8460-3f59-87f2-3f9fdfdde745\",\n        \"purchase_id\": \"10b11fa9-d881-3252-a268-7a1253e8f91b\",\n        \"value\": 7788,\n        \"date\": \"19/03/2024\",\n        \"card_number\": \"**** **** **** 6988\"\n    },\n    {\n        \"client_id\": \"42f94203-6dde-308b-89fb-eaa4253c25cb\",\n        \"purchase_id\": \"79799d09-c675-315c-a4b7-6bea7ef7c9e0\",\n        \"value\": 7664,\n        \"date\": \"19/03/2024\",\n        \"card_number\": \"**** **** **** 5386\"\n    },\n    {\n        \"client_id\": \"9757f84d-3c57-35da-99a0-1f00c63f9959\",\n        \"purchase_id\": \"9b98f54b-817b-416c-a028-0ece129aa0a5\",\n        \"value\": 1236,\n        \"date\": \"19/03/2024\",\n        \"card_number\": \"**** **** **** 1234\"\n    }\n]"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url_laravel_app",
+			"value": "localhost:8989"
+		}
+	]
+}
