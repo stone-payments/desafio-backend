@@ -68,3 +68,8 @@ a documetação também esta hospedada no [postgres web](https://documenter.getp
 ### Banco de dados:
 
 na pasta [docs/db/diagrams](./docs/db/diagrams/) disponibilizei o diagrama ER do banco de dados.
+
+# Melhorias a fazer:
+
+- [ ] cache
+- [ ] melhorar permissões da autenticação das rotas
