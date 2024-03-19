@@ -30,12 +30,14 @@ Route::prefix('starstore')->group(function () {
     });
 
     Route::prefix('buy')->group(function () {
-        Route::post('/', [TransactionController::class, 'store'])->name('buy.product');
+        Route::post('/', [TransactionController::class, 'store'])->name('buy.product')->middleware('auth:sanctum');
     });
 
-    Route::prefix('history')->group(function () {
-        Route::get('/', [TransactionController::class, 'index'])->name('get.history');
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::prefix('history')->group(function () {
+            Route::get('/', [TransactionController::class, 'index'])->name('get.history');
 
-        Route::get('/{id}', [TransactionController::class, 'showUserTransactions'])->name('show.user.history');
+            Route::get('/{id}', [TransactionController::class, 'showUserTransactions'])->name('show.user.history');
+        });
     });
 });
